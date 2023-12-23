@@ -6,9 +6,7 @@
 class Table {
 private: 
     int map_[28];
-    Bot bots_[4];
-    Human human_;
-
+    Player* players_[4];
 };
 
 #endif

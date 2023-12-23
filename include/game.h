@@ -1,11 +1,21 @@
 #ifndef GAME_H
 #define GAME_H
-#include "Table.h"
+
+#include <string>
+
+#include "table.h"
+#include "human.h"
+#include "bot.h"
 
 class Game{
+public:
+    Game(const std::string& arg);
+    void run();
 private: 
-    Table table_;
-    
+    int gameType_;
+    //Table table_;
+    //Human human_;
+    //Bot bot_[4];
 };
 
 #endif
