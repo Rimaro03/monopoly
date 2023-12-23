@@ -1,7 +1,6 @@
 #ifndef HUNAM_H
 #define HUNAM_H
-
-#include "Player.h"
+#include "player.h"
 
 class Human : public Player {
 private:

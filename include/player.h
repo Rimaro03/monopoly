@@ -2,6 +2,7 @@
 #define PLAYER_H
 #include "lateralBox.h"
 #include <string>
+
 class Player {
 private:
     int indexMove_;

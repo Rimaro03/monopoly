@@ -1,7 +1,7 @@
 #ifndef TABLE_H
 #define TABLE_H
-#include "Bot.h"
-#include "Human.h"
+#include "bot.h"
+#include "human.h"
 
 class Table {
 private: 

@@ -1,23 +1,12 @@
 #ifndef BOXTYPE_H
 #define BOXTYPE_H
 
-#include "LateralBox.h"
+#include "lateralBox.h"
 
-namespace BoxType{
-    class Economic: public LateralBox{
-        public:
-            Economic();
-    };
-
-    class Standard: public LateralBox{
-        public:
-            Standard();
-    };
-
-    class Luxury: public LateralBox{
-        public:
-            Luxury();
-    };
-}
+enum BoxType {
+    economic = 1,
+    standard = 2,
+    luxury = 3,
+};
 
 #endif

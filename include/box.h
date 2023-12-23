@@ -1,12 +1,15 @@
 #ifndef BOX_H
 #define BOX_H
 
-class Box {
+class Box
+{
 private:
-    unsigned int boxID_;
+    unsigned int id_;
+
 public:
-    void BoxID(unsigned int ID);
-    unsigned int BoxID();
+    Box(unsigned int ID);
+    void id(unsigned int ID);
+    unsigned int id() const;
 };
 
 #endif

@@ -1,3 +1,5 @@
+#ifndef LATERALBOX_H
+#define LATERALBOX_H
 #include "box.h"
 
 class LateralBox : public Box {
@@ -6,20 +8,24 @@ private:
     const int housePrice_;
     const int hotelPrice_;
 
-    const int house_rent_;
-    const int hotel_rent_;
+    const int houseRent_;
+    const int hotelRent_;
     bool house_;
     bool hotel_;
 
 public: 
-    LateralBox(const int price, const int housePrice, const int hotelPrice, const int house_rent, const int hotel_rent);
-    virtual int price();
-    virtual int housePrice();
-    virtual int hotelPrice();
-    virtual bool house();
-    virtual bool hotel();
-    virtual void house(bool house);
-    virtual void hotel(bool hotel);
-    virtual int houseRent();
-    virtual int hotelRent();
+    LateralBox(const unsigned int ID, const int price, const int housePrice, const int hotelPrice, const int houseRent, const int hotelRent);
+    int price() const;
+    int housePrice() const;
+    int hotelPrice() const;
+
+    int houseRent() const;
+    int hotelRent() const;
+
+    bool house() const;
+    bool hotel() const;
+    void house(bool house);
+    void hotel(bool hotel);
 };
+
+#endif
