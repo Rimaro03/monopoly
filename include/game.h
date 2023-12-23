@@ -9,13 +9,20 @@
 
 class Game{
 public:
-    Game(const std::string& arg);
-    void run();
+    Game& operator=(const Game&) = delete;
+
+    static Game& Get();
+    static void Init(const std::string& arg);
+    static void Run();
 private: 
     int gameType_;
     //Table table_;
     //Human human_;
     //Bot bot_[4];
+
+    Game();
+    void init_Internal(const std::string& arg);
+    void run_Internal();
 };
 
 #endif
