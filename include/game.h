@@ -6,6 +6,7 @@
 #include "table.h"
 #include "human.h"
 #include "bot.h"
+#include "output.h"
 
 class Game{
 public:
@@ -16,6 +17,7 @@ public:
     static void Run();
 private: 
     int gameType_;
+    Output output_;
     //Table table_;
     //Human human_;
     //Bot bot_[4];
