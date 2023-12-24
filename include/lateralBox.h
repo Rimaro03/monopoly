@@ -1,9 +1,11 @@
 #ifndef LATERALBOX_H
 #define LATERALBOX_H
 #include "box.h"
+#include "boxType.h"
 
 class LateralBox : public Box {
 private:
+    const BoxType type_;
     const int price_;
     const int housePrice_;
     const int hotelPrice_;
@@ -14,7 +16,7 @@ private:
     bool hotel_;
 
 public: 
-    LateralBox(const unsigned int ID, const int price, const int housePrice, const int hotelPrice, const int houseRent, const int hotelRent);
+    LateralBox(const unsigned int ID, BoxType type, const int price, const int housePrice, const int hotelPrice, const int houseRent, const int hotelRent);
     int price() const;
     int housePrice() const;
     int hotelPrice() const;
@@ -29,3 +31,4 @@ public:
 };
 
 #endif
+

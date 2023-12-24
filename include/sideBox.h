@@ -1,6 +1,6 @@
 #include "box.h"
 
-class SideBox : Box
+class SideBox : public Box
 {
 private:
     bool start_;

@@ -1,7 +1,7 @@
 #ifndef OUTPUT
 #define OUTPUT
 
-#include "Table.h"
+#include "table.h"
 #include <fstream>
 
 class Output

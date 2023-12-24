@@ -1,7 +1,7 @@
 #include "lateralBox.h"
 
-LateralBox::LateralBox(const unsigned int ID, const int price, const int housePrice, const int hotelPrice, const int houseRent, const int hotelRent)
-    : Box::Box(ID), price_{price}, housePrice_{housePrice}, hotelPrice_{hotelPrice}, houseRent_{houseRent}, hotelRent_{hotelRent}
+LateralBox::LateralBox(const unsigned int ID, BoxType type, const int price, const int housePrice, const int hotelPrice, const int houseRent, const int hotelRent)
+    : Box::Box(ID), type_{type}, price_{price}, housePrice_{housePrice}, hotelPrice_{hotelPrice}, houseRent_{houseRent}, hotelRent_{hotelRent}
 {
 }
 
