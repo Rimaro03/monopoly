@@ -12,8 +12,9 @@ public:
 
 	void updateLog(/*BOH?*/);
 	void printTable(const Table& table);
-	void printList(const Player* player);
+	void printList(const Table& player);
 	void printBalances(const Table& table);
+	void printCommandError(const std::string& command);
 
 private:
 	std::ofstream gameLog_;

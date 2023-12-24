@@ -56,7 +56,7 @@ void Output::printTable(const Table& table) {
 	for(int i = 0; i < TABLE_SIZE; i++){ delete[] table_str[i]; }
 	delete[] table_str;
 }
-void Output::printList(const Player* player) {
+void Output::printList(const Table& player) {
 	clearConsole();
 	std::cout << "Feature not implemented\n";
 	/*
@@ -77,6 +77,10 @@ void Output::printBalances(const Table& table) {
 		std::cout << p->name() << ": " << p->balance() << "$\n";
 	}
 	*/
+}
+void Output::printCommandError(const std::string& command) {
+	clearConsole();
+	std::cout << command << " is not a recognized command!" << std::endl;
 }
 
 void Output::clearConsole() { system("cls"); }

@@ -13,8 +13,12 @@ public:
     Game& operator=(const Game&) = delete;
 
     static Game& Get();
+
     static void Init(const std::string& arg);
+    static void Command(const std::string& command);
     static void Run();
+    
+    static bool Initialized();
 private: 
     int gameType_;
     Output output_;
@@ -23,7 +27,9 @@ private:
     //Bot bot_[4];
 
     Game();
+
     void init_Internal(const std::string& arg);
+    void command_Internal(const std::string& command);
     void run_Internal();
 };
 
