@@ -2,12 +2,13 @@
 #define PLAYER_H
 #include "lateralBox.h"
 #include <string>
-
+#include <vector>
 class Player {
 private:
     int indexMove_;
     int balance_;
-    std::string name_;
+    std::string name_;  
+    std::vector<LateralBox*> properties_;
 public:
     /**
      * @brief Construct a new Player object
@@ -20,6 +21,9 @@ public:
     /* Getter and setters */
     int indexMove();
     int balance();
+    std::string name();
+    std::vector<LateralBox*>* properties();
+
     void balance(int balance);
     void indexMove(int indexMove);
 
