@@ -1,29 +1,33 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 #include "lateralBox.h"
+#include <iostream>
 #include <string>
 #include <vector>
+
 class Player {
 private:
     int indexMove_;
     int balance_;
-    std::string name_;  
+    const unsigned int ID_;  
     std::vector<LateralBox*> properties_;
+
+    char* elaborateCoordinates(int index);
 public:
     /**
      * @brief Construct a new Player object
      * 
-     * @param name the player name (Such as "Player 1" or "Bot 1")
+     * @param ID the ID of the player
      * @param balance the starting balance of the player
+     * 
     */
-    Player(const std::string& name, int balance);
+    Player(const unsigned int ID, int balance);
 
     /* Getter and setters */
     int indexMove();
     int balance();
-    std::string name();
+    const unsigned int ID();
     std::vector<LateralBox*>* properties();
-
     void balance(int balance);
     void indexMove(int indexMove);
 
@@ -60,6 +64,13 @@ public:
      * @return false if the player can't add a house
     */
     bool addHouse(LateralBox& box);
+    /**
+     * @brief Add an hotel to a box
+     * 
+     * @param box the box to add the hotel
+     * @return true if the player can add an hotel
+     * @return false if the player can't add an hotel
+    */
     bool addHotel(LateralBox& box);
 };
 
