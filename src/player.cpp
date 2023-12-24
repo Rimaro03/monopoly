@@ -19,6 +19,13 @@ void Player::indexMove(int indexMove) {
     indexMove_ = indexMove;
 }
 
+std::string Player::name() {
+    return name_;
+}
+
+std::vector<LateralBox*>* Player::properties() {
+    return &properties_;
+}
 
 /* Actions */
 
