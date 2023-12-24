@@ -2,11 +2,15 @@
 #define TABLE_H
 #include "bot.h"
 #include "human.h"
+#include "box.h"
 
 class Table {
-private: 
-    int map_[28];
-    Player* players_[4];
+private:
+    Box map_[28];
+    Player* players_;
+
+public:
+    Table(Player* players);
 };
 
 #endif
