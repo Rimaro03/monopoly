@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-Game::Game() : gameType_(-1) {}
+Game::Game() : gameType_(-1) { }
 
 Game& Game::Get() { 
 	static Game instance_;
@@ -12,6 +12,7 @@ void Game::Init(const std::string& arg) { Get().init_Internal(arg); }
 void Game::Run() { Get().run_Internal(); }
 void Game::Command(const std::string& command) { Get().command_Internal(command); }
 void Game::Log(const std::string& command) { Get().log_Internal(command); }
+std::string Game::GetCoordinate(int position) { return Get().GetCoordinate_Internal(position); }
 
 bool Game::Initialized() { return Get().gameType_ != -1; }
 
@@ -26,6 +27,8 @@ void Game::init_Internal(const std::string& arg) {
 	// Table va inizializzata in base alla modalità di gioco quindi nel
 	// caso gameType == 0 (PvE) viene inizzializzata con 3 bot e un umano (prende i puntatori)
 	// altrimenti (gameType == 1) (EvE) viene inizializzata con 4 bot (prende i puntatori)
+
+	srand((unsigned int)time(NULL));
 }
 void Game::run_Internal() {
 	if (!Game::Initialized()) { throw std::runtime_error("Game not initialized!"); }
@@ -71,4 +74,31 @@ void Game::command_Internal(const std::string& command) {
 	else {
 		output_.printCommandError(command);
 	}
+
+	//std::cout << table_.currentMessage() << std::endl;
+}
+std::string Game::GetCoordinate_Internal(int position) {
+	if(!Game::Initialized()) { throw std::runtime_error("Game not initialized!"); }
+
+	std::string coordinates;
+	coordinates.resize(2);
+
+	if (position < 7) {
+		coordinates[0] = 'H';
+		coordinates[1] = '8' - position;
+	}
+	else if (position < 14) {
+		coordinates[0] = 'H' - position + 7;
+		coordinates[1] = '1';
+	}
+	else if (position < 21) {
+		coordinates[0] = 'A';
+		coordinates[1] = '1' + position - 14;
+	}
+	else if (position < 28) {
+		coordinates[0] = 'A' + position - 21;
+		coordinates[1] = '8';
+	}
+
+	return coordinates;
 }

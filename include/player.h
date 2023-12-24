@@ -11,8 +11,6 @@ private:
     int balance_;
     const unsigned int ID_;  
     std::vector<LateralBox*> properties_;
-
-    char* elaborateCoordinates(int index);
 public:
     /**
      * @brief Construct a new Player object

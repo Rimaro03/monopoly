@@ -12,12 +12,19 @@ class Game{
 public:
     Game& operator=(const Game&) = delete;
 
+    // Ritorna l'istanza di Game
     static Game& Get();
 
+    // Inizializza il gioco
     static void Init(const std::string& arg);
+    // Esegue un comando come "show"
     static void Command(const std::string& command);
+    // Logga inlog.txt 
     static void Log(const std::string& message);
+    // Esegue il gioco
     static void Run();
+    // Ritorna le coordinate di una casella
+    static std::string GetCoordinate(int position);
     
     static bool Initialized();
 private: 
@@ -33,6 +40,8 @@ private:
     void command_Internal(const std::string& command);
     void log_Internal(const std::string& message);
     void run_Internal();
+
+    std::string GetCoordinate_Internal(int position);
 };
 
 #endif
