@@ -10,9 +10,9 @@ public:
 	Output();
 	~Output();
 
-	void updateLog(/*BOH?*/);
+	void updateLog(const std::string& message);
 	void printTable(const Table& table);
-	void printList(const Table& player);
+	void printList(const Table& table);
 	void printBalances(const Table& table);
 	void printCommandError(const std::string& command);
 

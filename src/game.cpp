@@ -11,6 +11,8 @@ Game& Game::Get() {
 void Game::Init(const std::string& arg) { Get().init_Internal(arg); }
 void Game::Run() { Get().run_Internal(); }
 void Game::Command(const std::string& command) { Get().command_Internal(command); }
+void Game::Log(const std::string& command) { Get().log_Internal(command); }
+
 bool Game::Initialized() { return Get().gameType_ != -1; }
 
 void Game::init_Internal(const std::string& arg) {
@@ -37,6 +39,11 @@ void Game::run_Internal() {
 
 	std::cout << "The winner is " << table.winner()->name() << "!" << std::endl;
 	*/
+}
+void Game::log_Internal(const std::string& message) {
+	if (!Game::Initialized()) { throw std::runtime_error("Game not initialized!"); }
+
+	output_.updateLog(message);
 }
 void Game::command_Internal(const std::string& command) {
 	if (!Game::Initialized()) { throw std::runtime_error("Game not initialized!"); }

@@ -6,8 +6,8 @@
 Output::Output(): gameLog_("log.txt", std::fstream::out) { }
 Output::~Output() { gameLog_.close(); }
 
-void Output::updateLog(/*GameInfo*/) {
-	//gameLog_ << GameInfo.message();
+void Output::updateLog(const std::string& message) {
+	gameLog_ << message << "\n";
 }
 void Output::printTable(const Table& table) {
 	clearConsole();
@@ -56,7 +56,7 @@ void Output::printTable(const Table& table) {
 	for(int i = 0; i < TABLE_SIZE; i++){ delete[] table_str[i]; }
 	delete[] table_str;
 }
-void Output::printList(const Table& player) {
+void Output::printList(const Table& table) {
 	clearConsole();
 	std::cout << "Feature not implemented\n";
 	/*

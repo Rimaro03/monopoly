@@ -16,6 +16,7 @@ public:
 
     static void Init(const std::string& arg);
     static void Command(const std::string& command);
+    static void Log(const std::string& message);
     static void Run();
     
     static bool Initialized();
@@ -30,6 +31,7 @@ private:
 
     void init_Internal(const std::string& arg);
     void command_Internal(const std::string& command);
+    void log_Internal(const std::string& message);
     void run_Internal();
 };
 
