@@ -27,4 +27,12 @@ void Game::run_Internal() {
 	if (gameType_ == -1) { throw std::runtime_error("Game not initialized!"); }
 
 	std::cout << "Welcome to monopoly!" << std::endl;
+
+	/*
+	while(//table.is_there_a_winner?){
+		table.turn();
+	}
+
+	std::cout << "The winner is " << table.winner()->name() << "!" << std::endl;
+	*/
 }

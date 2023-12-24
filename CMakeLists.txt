@@ -5,7 +5,7 @@ include(CTest)
 include_directories(include)
 enable_testing()
 
-add_executable(monopoly src/main.cpp src/box.cpp src/sideBox.cpp src/lateralBox.cpp src/player.cpp src/game.cpp)
+add_executable(monopoly src/main.cpp src/box.cpp src/sideBox.cpp src/lateralBox.cpp src/player.cpp src/game.cpp "include/output.h" "src/output.cpp")
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
