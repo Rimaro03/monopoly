@@ -11,7 +11,9 @@ Game& Game::Get() {
 void Game::Init(const std::string& arg) { Get().init_Internal(arg); }
 void Game::Run() { Get().run_Internal(); }
 void Game::Command(const std::string& command) { Get().command_Internal(command); }
-void Game::Log(const std::string& command) { Get().log_Internal(command); }
+void Game::UpdateLog(const std::string& message) { Get().updateLog_Internal(message); }
+void Game::Log(const std::string& message) { Get().log_Internal(message); }
+
 std::string Game::GetCoordinate(int position) { return Get().GetCoordinate_Internal(position); }
 
 bool Game::Initialized() { return Get().gameType_ != -1; }
@@ -33,21 +35,17 @@ void Game::init_Internal(const std::string& arg) {
 void Game::run_Internal() {
 	if (!Game::Initialized()) { throw std::runtime_error("Game not initialized!"); }
 
-	std::cout << "Welcome to monopoly!" << std::endl;
+	Log("Hello world!");
 
 	/*
 	while(//table.is_there_a_winner?){
 		table.turn();
 	}
 
-	std::cout << "The winner is " << table.winner()->name() << "!" << std::endl;
+	Log("The winner is " + table.winner()->name() + "!");
 	*/
 }
-void Game::log_Internal(const std::string& message) {
-	if (!Game::Initialized()) { throw std::runtime_error("Game not initialized!"); }
-
-	output_.updateLog(message);
-}
+void Game::updateLog_Internal(const std::string& message) { output_.updateLog(message); }
 void Game::command_Internal(const std::string& command) {
 	if (!Game::Initialized()) { throw std::runtime_error("Game not initialized!"); }
 
@@ -56,15 +54,15 @@ void Game::command_Internal(const std::string& command) {
 		switch (counter % 3) {
 		case 0: 
 			/*output_.printTable(table_);*/
-			std::cout << "Table printed" << std::endl;
+			Log("Table printed");
 			break;
 		case 1:
 			/*output_.printList(table_);*/
-			std::cout << "List printed" << std::endl;
+			Log("List printed");
 			break;
 		case 2:
 			/*output_.printBalances(table_);*/
-			std::cout << "Balances printed" << std::endl;
+			Log("Balances printed");
 			break;
 		default: 
 			break;
@@ -74,12 +72,9 @@ void Game::command_Internal(const std::string& command) {
 	else {
 		output_.printCommandError(command);
 	}
-
-	//std::cout << table_.currentMessage() << std::endl;
 }
+void Game::log_Internal(const std::string& message) { std::cout << message << std::endl; }
 std::string Game::GetCoordinate_Internal(int position) {
-	if(!Game::Initialized()) { throw std::runtime_error("Game not initialized!"); }
-
 	std::string coordinates;
 	coordinates.resize(2);
 

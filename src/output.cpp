@@ -3,6 +3,8 @@
 #include <iostream>
 #include <string>
 
+#include "game.h"
+
 Output::Output(): gameLog_("log.txt", std::fstream::out) { }
 Output::~Output() { gameLog_.close(); }
 
@@ -80,7 +82,7 @@ void Output::printBalances(const Table& table) {
 }
 void Output::printCommandError(const std::string& command) {
 	clearConsole();
-	std::cout << command << " is not a recognized command!" << std::endl;
+	Game::Log(command + " is not a recognized command!");
 }
 
 void Output::clearConsole() { system("cls"); }

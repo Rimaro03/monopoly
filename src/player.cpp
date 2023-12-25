@@ -19,7 +19,7 @@ void Player::balance(int balance) {
 }
 void Player::indexMove(int indexMove) {
     indexMove_ = indexMove;
-    Game::Log("- Giocatore " + std::to_string(ID()) + " è arrivato alla casella " + Game::GetCoordinate(indexMove_));
+    Game::UpdateLog("- Giocatore " + std::to_string(ID()) + " è arrivato alla casella " + Game::GetCoordinate(indexMove_));
 }
 
 const unsigned int Player::ID() {
@@ -35,7 +35,7 @@ std::vector<LateralBox*>* Player::properties() {
 void Player::move() {
     int dice1 = rand() % 6 + 1;
     int dice2 = rand() % 6 + 1;
-    Game::Log("- Giocatore " + std::to_string(ID()) + " ha tirato i dadi ottenendo un valore di " + std::to_string(dice1 + dice2));
+    Game::UpdateLog("- Giocatore " + std::to_string(ID()) + " ha tirato i dadi ottenendo un valore di " + std::to_string(dice1 + dice2));
     indexMove((indexMove_ + dice1 + dice2) % 28);
 }
 bool Player::buy(LateralBox& box) {
