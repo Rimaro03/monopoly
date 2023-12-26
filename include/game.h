@@ -7,6 +7,7 @@
 #include "human.h"
 #include "bot.h"
 #include "output.h"
+#include "player.h"
 
 class Game{
 public:

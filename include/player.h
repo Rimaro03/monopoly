@@ -70,6 +70,8 @@ public:
      * @return false if the player can't add an hotel
     */
     bool addHotel(LateralBox& box);
+
+    void turn();
 };
 
 #endif

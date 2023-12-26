@@ -21,12 +21,17 @@ bool Game::Initialized() { return Get().gameType_ != -1; }
 void Game::init_Internal(const std::string& arg) {
 	//human_ = Human();
 	//for (int i = 0; i < 4; i++) { bot_[i] = Bot(); }
+	
+	//prove
+	/*Player players[4] = {Player(0, 0), Player(1,0), Player(2,0), Player(3,0)};
+	const Table table = Table(players);
+	output_.printTable(table);*/
 
 	if (arg == "human") { gameType_ = 0; }
 	else if (arg == "computer") { gameType_ = 1; }
 	else { throw std::invalid_argument("Invalid game type argument : " + arg); }
 
-	// Table va inizializzata in base alla modalità di gioco quindi nel
+	// Table va inizializzata in base alla modalitï¿½ di gioco quindi nel
 	// caso gameType == 0 (PvE) viene inizzializzata con 3 bot e un umano (prende i puntatori)
 	// altrimenti (gameType == 1) (EvE) viene inizializzata con 4 bot (prende i puntatori)
 

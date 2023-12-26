@@ -7,7 +7,7 @@
 class Table {
 public:
     Table(Player* players);
-
+    void turn();
 private:
     Box map_[28];
     Player* players_;

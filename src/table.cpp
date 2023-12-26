@@ -53,3 +53,12 @@ Table::Table(Player *players) : players_{players}
     map_[14] = SideBox(14, false);
     map_[21] = SideBox(21, false);
 }
+
+void Table::turn()
+{
+    for (size_t i = 0; i < 4; i++)
+    {
+        players_[i].turn();
+    }
+    
+}
