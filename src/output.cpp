@@ -91,8 +91,9 @@ void Output::printList(Table& table) {
 	{
 		std::string msg = "Player " + std::to_string(pp->ID()) + " : ";
 		for (Box* pb : table.map()) {
+			if (pb->side()) { continue; }
 
-			if (((LateralBox*)(&*pb))->owner() == pp) {
+			if (((LateralBox*)(pb))->owner() == pp) {
 				msg += Game::GetCoordinate(pb->id()) + " ";
 			}
 		}

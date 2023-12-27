@@ -74,12 +74,12 @@ void Table::turn()
         p->turn(this);
 }
 
-std::array<Box *, 28> Table::map()
+std::array<Box *, 28>& Table::map()
 {
     return map_;
 }
 
-std::array<Player *, 4> Table::players()
+std::array<Player *, 4>& Table::players()
 {
     return players_;
 }
