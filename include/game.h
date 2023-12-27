@@ -43,8 +43,6 @@ private:
     void updateLog_Internal(const std::string& message);
     void log_Internal(const std::string& message);
     void run_Internal();
-
-    std::string GetCoordinate_Internal(int position);
 };
 
 #endif

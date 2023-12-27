@@ -93,8 +93,7 @@ void Output::printList(Table& table) {
 		std::string msg = "Player " + std::to_string((*pp).ID()) + " : ";
 		for (auto pb = table.BeginBox(); pb != table.EndBox(); ++pb) {
 			if (((LateralBox*)(&*pb))->owner() == &*pp) {
-				//msg += *pb.name();
-				//msg += " ";
+				msg += Game::GetCoordinate((*pb).id()) + " ";
 			}
 		}
 		Game::Log(msg);
