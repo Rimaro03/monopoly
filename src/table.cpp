@@ -87,8 +87,9 @@ std::array<Player *, 4>& Table::players()
 }
 
 bool Table::hasWinner() const {
+    int counter = 0;
     for (Player* p : players_) {
-        if (p->balance() > 0) { return true; }
+        if (p->balance() > 0) { counter++; }
     }
-    return false;
+    return counter == 1;
 }
