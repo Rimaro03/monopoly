@@ -1,9 +1,13 @@
 #include "game.h"
+
+#include <iostream>
+#include <string>
+
+#include "rules.h"
 #include "player.h"
 #include "human.h"
-#include <iostream>
 
-Game::Game() : gameType_(-1) { }
+Game::Game() : gameType_(-1), human_(1, START_BALANCE), /*bot_{Bot(1, START_BALANCE), Bot(2, START_BALANCE), Bot(3, START_BALANCE), Bot(4, START_BALANCE)}*/ { }
 
 Game& Game::Get() { 
 	static Game instance_;
@@ -20,18 +24,6 @@ std::string Game::GetCoordinate(int position) { return Get().GetCoordinate_Inter
 bool Game::Initialized() { return Get().gameType_ != -1; }
 
 void Game::init_Internal(const std::string& arg) {
-	//human_ = Human();
-	//for (int i = 0; i < 4; i++) { bot_[i] = Bot(); }
-	
-	/*
-	Human players[4] = {Human(0, 0), Human(1,0), Human(2,0), Human(3,0)};
-	Table table = Table(players);
-	output_.printTable(table);
-	for(auto p = table.begin(); p != table.end(); ++p)
-	{
-		std::cout << (*p).ID() << " ";
-	}*/
-
 	if (arg == "human") { gameType_ = 0; }
 	else if (arg == "computer") { gameType_ = 1; }
 	else { throw std::invalid_argument("Invalid game type argument : " + arg); }
@@ -39,6 +31,12 @@ void Game::init_Internal(const std::string& arg) {
 	// Table va inizializzata in base alla modalit� di gioco quindi nel
 	// caso gameType == 0 (PvE) viene inizzializzata con 3 bot e un umano (prende i puntatori)
 	// altrimenti (gameType == 1) (EvE) viene inizializzata con 4 bot (prende i puntatori)
+	/*
+	if(gameType_ == 0){ table_.players(&human_, &bot_[0], &bot_[1], &bot_[2], &bot_[3]); }
+	else{ table_.players(&bot_[0], &bot_[1], &bot_[2], &bot_[3]); }
+	o 
+	table_ = Table(gameType_ == 0 ? &human_ : &bot_[0], &bot_[1], &bot_[2], &bot_[3]);
+	*/
 
 	srand((unsigned int)time(NULL));
 }
