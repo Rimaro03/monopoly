@@ -27,8 +27,8 @@ void Output::printTable(Table& table) {
 		}
 	}
 	for (char i = 1; i < (char)TABLE_SIZE; i++) { // NUMERI E LETTERE (COORDINATE)
-		table_str[i][0][2] = '0' + i;
-		table_str[0][i][2] = '@' + i;
+		table_str[i][0][2] = '@' + i;
+		table_str[0][i][2] = '0' + i;
 	}
 
 	// ----------------SET ANGULAR BOXES-------------

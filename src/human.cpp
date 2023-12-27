@@ -71,7 +71,7 @@ void Human::turn(Table* table) {
             Game::UpdateLog("- Giocatore " + std::to_string(Player::ID()) + " ha pagato " + std::to_string(box->hotelRent()) + " fiorini al giocatore " + std::to_string(box->owner()->ID()) + " per pernottamento nella casella " + Game::GetCoordinate(indexMove()));
         }
         else {
-            Game::UpdateLog("- Giocatore " + std::to_string(Player::ID()) + " è stato eliminato");
+            Game::UpdateLog("- Giocatore " + std::to_string(Player::ID()) + " e' stato eliminato");
             // remove player from Game
             return;
         }

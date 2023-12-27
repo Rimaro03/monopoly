@@ -37,6 +37,7 @@ void Game::run_Internal() {
 
 	//Log("Hello world!");
 	Command("show");
+	table_.turn();
 	/*
 	while(//table.is_there_a_winner?){
 		table.turn();
