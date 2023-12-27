@@ -1,3 +1,4 @@
+#include <array>
 #include "human.h"
 #include "game.h"
 
@@ -21,7 +22,7 @@ void Human::turn(Table* table) {
         return;
     }
 
-    Box** boxMap = table->box();
+    std::array<Box*, 28> boxMap = table->map();
     Box* boxUnknow = boxMap[indexMove()];
     LateralBox* box = (LateralBox*) boxUnknow;
 

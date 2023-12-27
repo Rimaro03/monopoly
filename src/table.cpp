@@ -30,20 +30,22 @@ Table::Table()
     int count = 0;
     for (unsigned int i = 0; i < 24; i++)
     {
-        Box* casella;
+        Box *casella;
         if (count < 8)
         {
             casella = new LateralBox(indici[i], BoxType::economic, 6, 3, 3, 2, 4);
         }
-        else if (count < 10){
+        else if (count < 10)
+        {
             casella = new LateralBox(indici[i], BoxType::standard, 10, 5, 5, 4, 8);
         }
-        else{
+        else
+        {
             casella = new LateralBox(indici[i], BoxType::luxury, 20, 10, 10, 7, 14);
         }
-        
+
         map_[indici[i]] = casella;
-        count ++;
+        count++;
     }
 
     map_[0] = new SideBox(0, true);
@@ -54,14 +56,11 @@ Table::Table()
 
 Table::~Table()
 {
-    for (size_t i = 0; i < 28; i++)
-    {
-        delete map_[i];
-    }
-    
+    for (Box *b : map_)
+        delete[] b;
 }
 
-void Table::players(Player* player1, Player* player2, Player* player3, Player* player4)
+void Table::players(Player *player1, Player *player2, Player *player3, Player *player4)
 {
     players_[0] = player1;
     players_[1] = player2;
@@ -71,14 +70,16 @@ void Table::players(Player* player1, Player* player2, Player* player3, Player* p
 
 void Table::turn()
 {
-    for (size_t i = 0; i < 4; i++)
-    {
-        //controllo partita finita o giocatore ha perso
-        players_[i]->turn(this);
-    }
+    for (Player *p : players_)
+        p->turn(this);
 }
 
-Box** Table::box()
+std::array<Box *, 28> Table::map()
 {
     return map_;
+}
+
+std::array<Player *, 4> Table::players()
+{
+    return players_;
 }
