@@ -60,5 +60,4 @@ void Table::turn()
     {
         players_[i].turn();
     }
-    
 }
