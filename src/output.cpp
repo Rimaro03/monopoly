@@ -72,7 +72,7 @@ void Output::printList(Table& table) {
 void Output::printBalances(Table& table) {
 	clearConsole();	
 	Game::Log("Balances:");
-	for (auto p = table.begin(); p != table.end(); ++p) {
+	for (auto p = table.BeginPlayer(); p != table.EndPlayer(); ++p) {
 		Game::Log("Player " + std::to_string((*p).ID()) + " : " + std::to_string((*p).balance()) + "$");
 	}
 
