@@ -16,7 +16,7 @@ public:
     // Inizializza il gioco
     static void Init(const std::string& arg);
     // Esegue un comando come "show"
-    static void Command(const std::string& command);
+    static void Show();
     // Logga in log.txt 
     static void UpdateLog(const std::string& message);
     // Logga in console
@@ -39,7 +39,7 @@ private:
     Game();
 
     void init_Internal(const std::string& arg);
-    void command_Internal(const std::string& command);
+    void show_Internal();
     void updateLog_Internal(const std::string& message);
     void log_Internal(const std::string& message);
     void run_Internal();

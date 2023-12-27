@@ -14,7 +14,7 @@ Game& Game::Get() {
 }
 void Game::Init(const std::string& arg) { Get().init_Internal(arg); }
 void Game::Run() { Get().run_Internal(); }
-void Game::Command(const std::string& command) { Get().command_Internal(command); }
+void Game::Show() { Get().show_Internal(); }
 void Game::UpdateLog(const std::string& message) { Get().updateLog_Internal(message); }
 void Game::Log(const std::string& message) { Get().log_Internal(message); }
 
@@ -44,17 +44,11 @@ void Game::updateLog_Internal(const std::string& message) {
 	output_.updateLog(message); 
 	Log(message);
 }
-void Game::command_Internal(const std::string& command) {
+void Game::show_Internal() {
 	if (!Game::Initialized()) { throw std::runtime_error("Game not initialized!"); }
-
-	if (command == "show") {
-		output_.printTable(table_);
-		output_.printList(table_);
-		output_.printBalances(table_);
-	}
-	else {
-		output_.printCommandError(command);
-	}
+	output_.printTable(table_);
+	output_.printList(table_);
+	output_.printBalances(table_);
 }
 void Game::log_Internal(const std::string& message) { std::cout << message << std::endl; }
 
