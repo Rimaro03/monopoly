@@ -22,6 +22,7 @@ private:
 
     //invece ti salvarmi tutto qua, mi riprendo i dati da rules.h tramite BoxType
     Player* owner() const;
+    BoxType type() const;
     void owner(Player* owner);
 
     int price() const;

@@ -10,6 +10,11 @@ Player* LateralBox::owner() const
     return owner_;
 }
 
+BoxType LateralBox::type() const
+{
+    return type_;
+}
+
 void LateralBox::owner(Player* owner)
 {
     owner_ = owner;

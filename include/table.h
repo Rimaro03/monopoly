@@ -62,8 +62,8 @@ public:
         friend bool operator==(const BoxIterator &a, const BoxIterator &b) { return a.box_ptr == b.box_ptr; };
         friend bool operator!=(const BoxIterator &a, const BoxIterator &b) { return a.box_ptr != b.box_ptr; };
 
-    private:
-        pointer box_ptr;
+        private:
+            pointer box_ptr;
     };
 
     BoxIterator BeginBox() { return BoxIterator(&map_[0]); };

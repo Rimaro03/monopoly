@@ -20,7 +20,7 @@ void Player::balance(int balance) {
 }
 void Player::indexMove(int indexMove) {
     indexMove_ = indexMove;
-    Game::UpdateLog("- Giocatore " + std::to_string(ID()) + " è arrivato alla casella " + Game::GetCoordinate(indexMove_));
+    Game::UpdateLog("- Giocatore " + std::to_string(ID()) + " e' arrivato alla casella " + Game::GetCoordinate(indexMove_));
 }
 int Player::lastPosition() {
     return lastPosition_;

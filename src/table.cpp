@@ -33,19 +33,15 @@ Table::Table()
         Box* casella;
         if (count < 8)
         {
-            casella = new LateralBox(i, BoxType::economic, 6, 3, 3, 2, 4);
+            casella = new LateralBox(indici[i], BoxType::economic, 6, 3, 3, 2, 4);
         }
-        else
-        {
-            if (count < 10)
-            {
-                casella = new LateralBox(i, BoxType::standard, 10, 5, 5, 4, 8);
-            }
-            else
-            {
-                casella = new LateralBox(i, BoxType::luxury, 20, 10, 10, 7, 14);
-            }
+        else if (count < 10){
+            casella = new LateralBox(indici[i], BoxType::standard, 10, 5, 5, 4, 8);
         }
+        else{
+            casella = new LateralBox(indici[i], BoxType::luxury, 20, 10, 10, 7, 14);
+        }
+        
         map_[indici[i]] = casella;
         count ++;
     }
