@@ -25,6 +25,8 @@ public:
     static void Run();
     // Ritorna le coordinate di una casella
     static std::string GetCoordinate(int position);
+    static int X(int position);
+    static int Y(int position);
     
     static bool Initialized();
 private: 

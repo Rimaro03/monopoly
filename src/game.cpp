@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <string>
+#include <Windows.h>
 
 #include "rules.h"
 #include "player.h"
@@ -19,8 +20,6 @@ void Game::Command(const std::string& command) { Get().command_Internal(command)
 void Game::UpdateLog(const std::string& message) { Get().updateLog_Internal(message); }
 void Game::Log(const std::string& message) { Get().log_Internal(message); }
 
-std::string Game::GetCoordinate(int position) { return Get().GetCoordinate_Internal(position); }
-
 bool Game::Initialized() { return Get().gameType_ != -1; }
 
 void Game::init_Internal(const std::string& arg) {
@@ -28,7 +27,7 @@ void Game::init_Internal(const std::string& arg) {
 	else if (arg == "computer") { gameType_ = 1; }
 	else { throw std::invalid_argument("Invalid game type argument : " + arg); }
 
-	if (gameType_ == 0) { table_.players(&human_, &bot_[0], &bot_[1], &bot_[2]); }
+	if (gameType_ == 0) { table_.players(&human_, &bot_[1], &bot_[2], &bot_[3]); }
 	else { table_.players(&bot_[0], &bot_[1], &bot_[2], &bot_[3]); }
 
 	srand((unsigned int)time(NULL));
@@ -36,8 +35,8 @@ void Game::init_Internal(const std::string& arg) {
 void Game::run_Internal() {
 	if (!Game::Initialized()) { throw std::runtime_error("Game not initialized!"); }
 
-	Log("Hello world!");
-
+	//Log("Hello world!");
+	Command("show");
 	/*
 	while(//table.is_there_a_winner?){
 		table.turn();
@@ -75,7 +74,8 @@ void Game::command_Internal(const std::string& command) {
 	}
 }
 void Game::log_Internal(const std::string& message) { std::cout << message << std::endl; }
-std::string Game::GetCoordinate_Internal(int position) {
+
+std::string Game::GetCoordinate(int position) {
 	std::string coordinates;
 	coordinates.resize(2);
 
@@ -97,4 +97,17 @@ std::string Game::GetCoordinate_Internal(int position) {
 	}
 
 	return coordinates;
+}
+int Game::X(int position) {
+
+	if (position < 8) { return 8 - position; }
+	else if (position < 14) { return 1; }
+	else if (position < 22) { return position - 13; }
+	else /*pos < 28*/ { return 8; }
+}
+int Game::Y(int position) {
+	if (position < 8) { return  8; }
+	else if (position < 14) { return 15 - position; }
+	else if (position < 22) { return 1; }
+	else /*pos < 28*/ { return position - 20; }
 }
