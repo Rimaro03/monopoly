@@ -11,7 +11,7 @@ Output::~Output() { gameLog_.close(); }
 void Output::updateLog(const std::string& message) {
 	gameLog_ << message << "\n";
 }
-void Output::printTable(const Table& table) {
+void Output::printTable(Table& table) {
 	clearConsole();
 	std::cout << "Feature not completed \n";
 	
@@ -58,7 +58,7 @@ void Output::printTable(const Table& table) {
 	for(int i = 0; i < TABLE_SIZE; i++){ delete[] table_str[i]; }
 	delete[] table_str;
 }
-void Output::printList(const Table& table) {
+void Output::printList(Table& table) {
 	clearConsole();
 	std::cout << "Feature not implemented\n";
 	/*
@@ -69,16 +69,13 @@ void Output::printList(const Table& table) {
 	}
 	*/
 }
-void Output::printBalances(const Table& table) {
-	clearConsole();
-	std::cout << "Feature not implemented\n";
-	/*
-	std::cout << "Balances:\n";
-
-	for(Player* p : table){
-		std::cout << p->name() << ": " << p->balance() << "$\n";
+void Output::printBalances(Table& table) {
+	clearConsole();	
+	Game::Log("Balances:");
+	for (auto p = table.begin(); p != table.end(); ++p) {
+		Game::Log("Player " + std::to_string((*p).ID()) + " : " + std::to_string((*p).balance()) + "$");
 	}
-	*/
+
 }
 void Output::printCommandError(const std::string& command) {
 	clearConsole();

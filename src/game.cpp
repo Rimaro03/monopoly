@@ -28,15 +28,8 @@ void Game::init_Internal(const std::string& arg) {
 	else if (arg == "computer") { gameType_ = 1; }
 	else { throw std::invalid_argument("Invalid game type argument : " + arg); }
 
-	// Table va inizializzata in base alla modalit� di gioco quindi nel
-	// caso gameType == 0 (PvE) viene inizzializzata con 3 bot e un umano (prende i puntatori)
-	// altrimenti (gameType == 1) (EvE) viene inizializzata con 4 bot (prende i puntatori)
-	/*
-	if(gameType_ == 0){ table_.players(&human_, &bot_[0], &bot_[1], &bot_[2], &bot_[3]); }
-	else{ table_.players(&bot_[0], &bot_[1], &bot_[2], &bot_[3]); }
-	o 
-	table_ = Table(gameType_ == 0 ? &human_ : &bot_[0], &bot_[1], &bot_[2], &bot_[3]);
-	*/
+	if (gameType_ == 0) { table_.players(&human_, &bot_[0], &bot_[1], &bot_[2]); }
+	else { table_.players(&bot_[0], &bot_[1], &bot_[2], &bot_[3]); }
 
 	srand((unsigned int)time(NULL));
 }
@@ -53,7 +46,10 @@ void Game::run_Internal() {
 	Log("The winner is " + table.winner()->name() + "!");
 	*/
 }
-void Game::updateLog_Internal(const std::string& message) { output_.updateLog(message); }
+void Game::updateLog_Internal(const std::string& message) { 
+	output_.updateLog(message); 
+	Log(message);
+}
 void Game::command_Internal(const std::string& command) {
 	if (!Game::Initialized()) { throw std::runtime_error("Game not initialized!"); }
 
@@ -61,16 +57,13 @@ void Game::command_Internal(const std::string& command) {
 		static int counter = 0;
 		switch (counter % 3) {
 		case 0: 
-			/*output_.printTable(table_);*/
-			Log("Table printed");
+			output_.printTable(table_);
 			break;
 		case 1:
-			/*output_.printList(table_);*/
-			Log("List printed");
+			output_.printList(table_);
 			break;
 		case 2:
-			/*output_.printBalances(table_);*/
-			Log("Balances printed");
+			output_.printBalances(table_);
 			break;
 		default: 
 			break;

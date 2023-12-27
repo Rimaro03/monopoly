@@ -11,9 +11,9 @@ public:
 	~Output();
 
 	void updateLog(const std::string& message);
-	void printTable(const Table& table);
-	void printList(const Table& table);
-	void printBalances(const Table& table);
+	void printTable(Table& table);
+	void printList(Table& table);
+	void printBalances(Table& table);
 	void printCommandError(const std::string& command);
 
 private:

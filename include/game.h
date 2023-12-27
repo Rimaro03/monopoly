@@ -30,7 +30,7 @@ public:
 private: 
     int gameType_;
     Output output_;
-    //Table table_;
+    Table table_;
     Human human_;
     Bot bot_[4];
 
