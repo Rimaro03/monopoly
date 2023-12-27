@@ -44,14 +44,14 @@ Table::Table()
             {
                 casella = LateralBox(i, BoxType::luxury, 20, 10, 10, 7, 14);
             }
-            map_[indici[i]] = casella;
+            map_[indici[i]] = &casella;
         }
     }
 
-    map_[0] = SideBox(0, true);
-    map_[7] = SideBox(7, false);
-    map_[14] = SideBox(14, false);
-    map_[21] = SideBox(21, false);
+    map_[0] = new SideBox(0, true);
+    map_[7] = new SideBox(7, false);
+    map_[14] = new SideBox(14, false);
+    map_[21] = new SideBox(21, false);
 }
 
 void Table::turn()

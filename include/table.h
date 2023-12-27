@@ -7,7 +7,7 @@
 class Table
 {
 public:
-    Table(); //e aggiungere set per i players
+    Table(); // e aggiungere set per i players
     void turn();
 
     struct Iterator
@@ -35,6 +35,7 @@ public:
         };
         friend bool operator==(const Iterator &a, const Iterator &b) { return a.player_ptr == b.player_ptr; };
         friend bool operator!=(const Iterator &a, const Iterator &b) { return a.player_ptr != b.player_ptr; };
+
     private:
         pointer player_ptr;
     };
@@ -42,12 +43,10 @@ public:
     Iterator begin() { return Iterator(&players_[0]); };
     Iterator end() { return Iterator(&players_[4]); };
 
-    //aggiungere iteratore per le box
+    // aggiungere iteratore per le box
 
 private:
-    //array di puntatori non di oggetti
-    Box map_[28];
-    
+    Box *map_[28];
     Player *players_[4];
 };
 
