@@ -3,7 +3,7 @@
 
 int main() {
     int argc = 1;
-    char* argv[] = { "human" }; // DEBUG
+    const char* argv[] = { "human" }; // DEBUG
 
     if (argc != 1) { throw std::invalid_argument("args count must be 1!"); }
 
