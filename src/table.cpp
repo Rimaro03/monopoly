@@ -58,6 +58,7 @@ void Table::turn()
 {
     for (size_t i = 0; i < 4; i++)
     {
+        //controllo partita finita o giocatore ha perso
         players_[i].turn();
     }
 }
