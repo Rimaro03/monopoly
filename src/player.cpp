@@ -67,7 +67,7 @@ bool Player::payPlayer(Player& player, LateralBox& box) {
             return true;
         }
     } 
-    return false;
+    return true;
 }
 
 bool Player::addHouse(LateralBox& box) {

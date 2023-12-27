@@ -28,9 +28,13 @@ void Human::turn(Table* table) {
 
     if(box->owner() == nullptr){
         if(Player::balance() - box->price() >= 0){
-            Game::Log("Vuoi comprare la casella " + Game::GetCoordinate(indexMove()) + " per " + std::to_string(box->price()) + " fiorini? (s)");
             std::string answer;
-            std::cin >> answer;
+            do {
+                Game::Log("Vuoi comprare la casella " + Game::GetCoordinate(indexMove()) + " per " + std::to_string(box->price()) + " fiorini? (s/n)");
+                std::cin >> answer;
+                if(answer == "show") Game::Show();
+            } while((tolower(answer[0]) != 's' && tolower(answer[0]) != 'n') || answer.length() > 1);
+
             if(answer == "s"){
                 Player::buy(*box);
                 Game::UpdateLog("- Giocatore " + std::to_string(Player::ID()) + " ha acquistato il terreno " + Game::GetCoordinate(indexMove()));
@@ -42,9 +46,13 @@ void Human::turn(Table* table) {
     else if (box->owner() == this){
         if(box->house() && !box->hotel()){
             if(Player::balance() - box->houseRent() >= 0){
-                Game::Log("Vuoi costruire un albergo sulla casella " + Game::GetCoordinate(indexMove()) + " per " + std::to_string(box->hotelPrice()) + " fiorini? (s)");
                 std::string answer;
-                std::cin >> answer;
+                do{
+                    Game::Log("Vuoi costruire un albergo sulla casella " + Game::GetCoordinate(indexMove()) + " per " + std::to_string(box->hotelPrice()) + " fiorini? (s/n)");
+                    std::cin >> answer;
+                    if(answer == "show") Game::Show();
+                } while((tolower(answer[0]) != 's' && tolower(answer[0]) != 'n') || answer.length() > 1);
+
                 if(answer == "s"){
                     Player::balance(Player::balance() - box->hotelPrice());
                     box->hotel(true);
@@ -55,9 +63,13 @@ void Human::turn(Table* table) {
         } 
         else if(!box->house() && !box->hotel()){
             if(Player::balance() - box->housePrice() >= 0){
-                Game::Log("Vuoi costruire una casa sulla casella " + Game::GetCoordinate(indexMove()) + " per " + std::to_string(box->housePrice()) + " fiorini? (s)");
                 std::string answer;
-                std::cin >> answer;
+                do{
+                    Game::Log("Vuoi costruire una casa sulla casella " + Game::GetCoordinate(indexMove()) + " per " + std::to_string(box->housePrice()) + " fiorini? (s/n)");
+                    std::cin >> answer;
+                    if(answer == "show") Game::Show();
+                } while((tolower(answer[0]) != 's' && tolower(answer[0]) != 'n') || answer.length() > 1);
+
                 if(answer == "s"){
                     Player::balance(Player::balance() - box->housePrice());
                     box->house(true);
