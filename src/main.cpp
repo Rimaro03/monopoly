@@ -9,6 +9,5 @@ int main() {
 
     Game::Init(argv[0]);
     Game::Run();
-
     return 0;
 }

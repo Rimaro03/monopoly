@@ -53,7 +53,7 @@ public:
      * @return true if the player can pay the player
      * @return false if the player can't pay the player
     */
-    bool payPlayer(Player& player, LateralBox& box);
+    bool payPlayer(Player* player, LateralBox* box);
 
     /**
      * @brief Add a house to a box

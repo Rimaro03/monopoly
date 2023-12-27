@@ -5,6 +5,8 @@
 Human::Human(const unsigned int ID, int balance) : Player(ID, balance) {}
 
 void Human::turn(Table* table) {
+    if(balance() == -1) return;
+
     if(balance() < 0){
         Game::UpdateLog("- Giocatore " + std::to_string(ID()) + " e' stato eliminato");
         Player::removePlayer(table);
@@ -78,7 +80,7 @@ void Human::turn(Table* table) {
         }
     }
     else if (box->owner() != this){
-        if(Player::payPlayer(*(box->owner()), *box)){
+        if(Player::payPlayer(box->owner(), box)){
             if(box->hotel()){
                 Game::UpdateLog("- Giocatore " + std::to_string(Player::ID()) + " ha pagato " + std::to_string(box->hotelRent()) + " fiorini al giocatore " + std::to_string(box->owner()->ID()) + " per pernottamento nella casella " + Game::GetCoordinate(indexMove()));
             }

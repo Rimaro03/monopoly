@@ -5,8 +5,8 @@
 
 enum BoxType {
     economic = 0,
-    standard,
-    luxury,
+    standard = 1,
+    luxury = 2,
 };
 
 #endif

@@ -47,23 +47,23 @@ bool Player::buy(LateralBox& box) {
         return true;
     }
 }
-bool Player::payPlayer(Player& player, LateralBox& box) {
-    if(box.hotel()){
-        if(balance() - box.hotelRent() < 0){
-            player.balance(player.balance() + balance());
+bool Player::payPlayer(Player* player, LateralBox* box) {
+    if(box->hotel() && !box->house()){
+        if(balance() - box->hotelRent() < 0){
+            player->balance(player->balance() + balance());
             return false;
         } else {
-            balance(balance() - box.hotelRent());
-            player.balance(player.balance() + box.hotelRent());
+            balance(balance() - box->hotelRent());
+            player->balance(player->balance() + box->hotelRent());
             return true;
         }
-    } else if(box.house()){
-        if(balance() - box.houseRent() < 0){
-            player.balance(player.balance() + balance());
+    } else if(box->house() && !box->hotel()){
+        if(balance() - box->houseRent() < 0){
+            player->balance(player->balance() + balance());
             return false;
         } else {
-            balance(balance() - box.houseRent());
-            player.balance(player.balance() + box.houseRent());
+            balance(balance() - box->houseRent());
+            player->balance(player->balance() + box->houseRent());
             return true;
         }
     } 
@@ -95,8 +95,11 @@ void Player::endTurn() {
 void Player::removePlayer(Table* table) {
     std::array<Box*, 28> boxMap = table->map();
     for(Box* box : boxMap){
-        if(((LateralBox*)box)->owner() == this){
-            ((LateralBox*)box)->owner(nullptr);
+        LateralBox* lateralBox = (LateralBox*) box;
+        if(lateralBox->owner() == this){
+            lateralBox->owner(nullptr);
+            lateralBox->house(false);
+            lateralBox->hotel(false);
         }
     }
     this->balance(-1);
