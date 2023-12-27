@@ -1,6 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 #include "lateralBox.h"
+#include "declaration.h"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -81,7 +82,7 @@ public:
     /**
      * @brief The turn of the player
     */
-    virtual void turn() = 0;
+    virtual void turn(Table* table) = 0;
 
     /**
      * @brief print to the log the end of the turn

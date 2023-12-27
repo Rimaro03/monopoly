@@ -6,7 +6,7 @@ class Human : public Player {
 public:
     Human(const unsigned int ID, int balance);
 
-    void turn() override;
+    void turn(Table* table) override;
 };
 
 #endif

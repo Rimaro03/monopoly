@@ -3,7 +3,7 @@
 
 Human::Human(const unsigned int ID, int balance) : Player(ID, balance) {}
 
-void Human::turn() {
+void Human::turn(Table* table) {
     if(balance() < 0){
         Game::UpdateLog("- Giocatore " + std::to_string(ID()) + " è stato eliminato");
         // remove player from Game

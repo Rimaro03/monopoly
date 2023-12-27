@@ -7,7 +7,7 @@ private:
 
 public:
     Bot(const unsigned int ID, int balance);
-    void turn();
+    void turn(Table* table) override;
 };
 
 #endif

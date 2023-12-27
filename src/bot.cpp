@@ -2,6 +2,6 @@
 
 Bot::Bot(const unsigned int ID, int balance) : Player(ID, balance) {}
 
-void Bot::turn(){
+void Bot::turn(Table* table){
     // TODO: Implement bot turn
 }
