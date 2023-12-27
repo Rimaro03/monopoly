@@ -45,8 +45,8 @@ Table::Table()
             {
                 casella = new LateralBox(i, BoxType::luxury, 20, 10, 10, 7, 14);
             }
-            map_[indici[i]] = casella;
         }
+        map_[indici[i]] = casella;
         count ++;
     }
 
