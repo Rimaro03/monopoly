@@ -5,7 +5,7 @@ Bot::Bot(const unsigned int ID, int balance) : Player(ID, balance) {}
 
 void Bot::turn(Table* table){
     if(balance() < 0){
-        Game::UpdateLog("- Giocatore " + std::to_string(ID()) + " è stato eliminato");
+        Game::UpdateLog("- Giocatore " + std::to_string(ID()) + " e' stato eliminato");
         Player::removePlayer(table);
         return;
     }
@@ -13,7 +13,7 @@ void Bot::turn(Table* table){
 
     if(indexMove() < Player::lastPosition()){
         balance(balance() + 20);
-        Game::UpdateLog("- Giocatore " + std::to_string(Player::ID()) +" è passato dal via e ha ritirato 20 fiorini");
+        Game::UpdateLog("- Giocatore " + std::to_string(Player::ID()) +" e' passato dal via e ha ritirato 20 fiorini");
     }
 
     if(Player::indexMove() % 7 == 0){
