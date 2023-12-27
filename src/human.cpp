@@ -56,7 +56,6 @@ void Human::turn(Table* table) {
                 if(answer == "s"){
                     Player::balance(Player::balance() - box->hotelPrice());
                     box->hotel(true);
-                    box->house(false);
                     Game::UpdateLog("- Giocatore " + std::to_string(Player::ID()) + "  ha migliorato una casa in albergo sul terreno " + Game::GetCoordinate(indexMove()));
                 }
             }
