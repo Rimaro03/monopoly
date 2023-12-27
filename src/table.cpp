@@ -29,22 +29,22 @@ Table::Table()
     int count = 0;
     for (unsigned int i = 0; i < 24; i++)
     {
-        Box casella;
+        Box* casella;
         if (count < 8)
         {
-            casella = LateralBox(i, BoxType::economic, 6, 3, 3, 2, 4);
+            casella = new LateralBox(i, BoxType::economic, 6, 3, 3, 2, 4);
         }
         else
         {
             if (count < 10)
             {
-                casella = LateralBox(i, BoxType::standard, 10, 5, 5, 4, 8);
+                casella = new LateralBox(i, BoxType::standard, 10, 5, 5, 4, 8);
             }
             else
             {
-                casella = LateralBox(i, BoxType::luxury, 20, 10, 10, 7, 14);
+                casella = new LateralBox(i, BoxType::luxury, 20, 10, 10, 7, 14);
             }
-            map_[indici[i]] = &casella;
+            map_[indici[i]] = casella;
         }
     }
 
@@ -52,6 +52,14 @@ Table::Table()
     map_[7] = new SideBox(7, false);
     map_[14] = new SideBox(14, false);
     map_[21] = new SideBox(21, false);
+}
+
+void Table::players(Player* player1, Player* player2, Player* player3, Player* player4)
+{
+    players_[0] = player1;
+    players_[1] = player2;
+    players_[2] = player3;
+    players_[3] = player4;
 }
 
 void Table::turn()
