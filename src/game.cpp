@@ -33,7 +33,6 @@ void Game::init_Internal(const std::string& arg) {
 void Game::run_Internal() {
 	if (!Game::Initialized()) { throw std::runtime_error("Game not initialized!"); }
 
-	//Log("Hello world!");
 	while(!table_.hasWinner()){
 		table_.turn();
 	}

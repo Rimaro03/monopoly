@@ -46,19 +46,27 @@ void Output::printTable(Table& table) {
 	}
 
 
-	for (int pos = 0; pos < 28; pos++) {
-		int x = Game::X(pos);
-		int y = Game::Y(pos);
+	for (Box* box : table.map()) {
+		int x = Game::X(box->id());
+		int y = Game::Y(box->id());
 
-		if (pos % 7 != 0) { 
+		if (!box->side()) {
 			char type;
-			switch (((LateralBox*)table.map()[pos])->type()) {
+			switch (((LateralBox*)box)->type()) {
 			case luxury: type = 'L'; break;
 			case standard: type = 'S'; break;
 			case economic: type = 'E'; break;
 			default: throw std::runtime_error("Invalid box type!");
 			}
+
+			char houseHotel = ' ';
+			if (((LateralBox*)box)->house()) { houseHotel = '*'; }
+			else if (((LateralBox*)box)->hotel()) { houseHotel = '^'; }
+
 			table_str[y][x][2] = type; 
+			table_str[y][x][3] = houseHotel;
+
+
 		} // DEBUG
 	}
 	for (Player* p : table.players()) {

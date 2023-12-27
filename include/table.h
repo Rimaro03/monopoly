@@ -1,6 +1,9 @@
 #ifndef TABLE_H
 #define TABLE_H
+
 #include <array>
+
+#include "rules.h"
 #include "bot.h"
 #include "human.h"
 #include "box.h"
@@ -21,8 +24,8 @@ public:
 
 private:
     //usare gli array con il loro iteratore
-    std::array<Box*, 28> map_;
-    std::array<Player*, 4> players_;
+    std::array<Box*, BOXES> map_;
+    std::array<Player*, PLAYERS_COUNT> players_;
 };
 
 #endif

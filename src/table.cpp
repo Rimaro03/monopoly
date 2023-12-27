@@ -31,11 +31,11 @@ Table::Table() : players_{nullptr, nullptr, nullptr, nullptr}
     for (unsigned int i = 0; i < 24; i++)
     {
         Box *casella;
-        if (count < 8)
+        if (count < ECONOMIC_BOXES_COUNT)
         {
             casella = new LateralBox(indici[i], BoxType::economic, 6, 3, 3, 2, 4);
         }
-        else if (count < 10)
+        else if (count < ECONOMIC_BOXES_COUNT + STANDARD_BOXES_COUNT)
         {
             casella = new LateralBox(indici[i], BoxType::standard, 10, 5, 5, 4, 8);
         }
