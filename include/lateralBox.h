@@ -20,6 +20,7 @@ private:
     public: 
     LateralBox(const unsigned int ID, BoxType type, const int price, const int housePrice, const int hotelPrice, const int houseRent, const int hotelRent);
 
+    //invece ti salvarmi tutto qua, mi riprendo i dati da rules.h tramite BoxType
     Player* owner() const;
     void owner(Player* owner);
 

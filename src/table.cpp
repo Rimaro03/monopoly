@@ -5,7 +5,7 @@
 #include "sideBox.h"
 #include "lateralBox.h"
 
-Table::Table(Player *players) : players_{players}
+Table::Table()
 {
     int ecoCount = 8;
     int standardCount = 10;
@@ -59,6 +59,6 @@ void Table::turn()
     for (size_t i = 0; i < 4; i++)
     {
         //controllo partita finita o giocatore ha perso
-        players_[i].turn();
+        players_[i]->turn();
     }
 }
