@@ -1,13 +1,12 @@
-#ifndef HUNAM_H
-#define HUNAM_H
+#ifndef HUMAN_H
+#define HUMAN_H
 #include "player.h"
 
 class Human : public Player {
-private:
-    /* data */
 public:
-    Human(/* args */);
-    ~Human();
+    Human(const unsigned int ID, int balance);
+
+    void turn() override;
 };
 
 #endif

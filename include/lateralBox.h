@@ -3,8 +3,11 @@
 #include "box.h"
 #include "boxType.h"
 
+class Player;
+
 class LateralBox : public Box {
 private:
+    Player* owner_;
     const BoxType type_;
     const int price_;
     const int housePrice_;
@@ -15,8 +18,12 @@ private:
     bool house_;
     bool hotel_;
 
-public: 
+    public: 
     LateralBox(const unsigned int ID, BoxType type, const int price, const int housePrice, const int hotelPrice, const int houseRent, const int hotelRent);
+
+    Player* owner() const;
+    void owner(Player* owner);
+
     int price() const;
     int housePrice() const;
     int hotelPrice() const;

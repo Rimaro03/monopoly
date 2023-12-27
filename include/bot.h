@@ -4,6 +4,9 @@
 class Bot {
 private:
 
+public:
+    Bot(const unsigned int ID, int balance);
+    void turn();
 };
 
 #endif

@@ -7,10 +7,10 @@
 
 class Player {
 private:
+    int lastPosition_;
     int indexMove_;
     int balance_;
     const unsigned int ID_;  
-    std::vector<LateralBox*> properties_;
 public:
     /**
      * @brief Construct a new Player object
@@ -23,9 +23,9 @@ public:
 
     /* Getter and setters */
     int indexMove();
+    int lastPosition();
     int balance();
     const unsigned int ID();
-    std::vector<LateralBox*>* properties();
     void balance(int balance);
     void indexMove(int indexMove);
 
@@ -71,7 +71,22 @@ public:
     */
     bool addHotel(LateralBox& box);
 
-    void turn();
+    /**
+     * @brief Throw a dice
+     * 
+     * @return int the value of the dice
+    */
+    int throwDice();
+
+    /**
+     * @brief The turn of the player
+    */
+    virtual void turn() = 0;
+
+    /**
+     * @brief print to the log the end of the turn
+    */
+    void endTurn();
 };
 
 #endif

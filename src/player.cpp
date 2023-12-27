@@ -1,4 +1,5 @@
 #include "player.h"
+
 #include "game.h"
 
 /* Constructors */
@@ -21,21 +22,20 @@ void Player::indexMove(int indexMove) {
     indexMove_ = indexMove;
     Game::UpdateLog("- Giocatore " + std::to_string(ID()) + " è arrivato alla casella " + Game::GetCoordinate(indexMove_));
 }
-
+int Player::lastPosition() {
+    return lastPosition_;
+}
 const unsigned int Player::ID() {
     return ID_;
-}
-
-std::vector<LateralBox*>* Player::properties() {
-    return &properties_;
 }
 
 /* Actions */
 
 void Player::move() {
-    int dice1 = rand() % 6 + 1;
-    int dice2 = rand() % 6 + 1;
+    int dice1 = throwDice();
+    int dice2 = throwDice();
     Game::UpdateLog("- Giocatore " + std::to_string(ID()) + " ha tirato i dadi ottenendo un valore di " + std::to_string(dice1 + dice2));
+    lastPosition_ = indexMove();
     indexMove((indexMove_ + dice1 + dice2) % 28);
 }
 bool Player::buy(LateralBox& box) {
@@ -43,7 +43,7 @@ bool Player::buy(LateralBox& box) {
         return false;
     } else {
         balance(balance() - box.price());
-        properties_.push_back(&box);
+        box.owner(this);
         return true;
     }
 }
@@ -69,6 +69,7 @@ bool Player::payPlayer(Player& player, LateralBox& box) {
     } 
     return false;
 }
+
 bool Player::addHouse(LateralBox& box) {
     if(balance() - box.housePrice() >= 0 && !box.hotel() && !box.house()){
         balance(balance() - box.housePrice());
@@ -85,4 +86,9 @@ bool Player::addHotel(LateralBox& box) {
     } 
     return false;
 }
-
+int Player::throwDice() {
+    return rand() % 6 + 1;
+}
+void Player::endTurn() {
+    Game::UpdateLog("- Giocatore " + std::to_string(ID()) + " ha finito il turno");
+}
