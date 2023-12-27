@@ -79,3 +79,8 @@ void Table::turn()
         players_[i]->turn(this);
     }
 }
+
+Box* Table::box() const
+{
+    return *map_;
+}

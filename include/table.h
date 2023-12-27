@@ -13,6 +13,8 @@ public:
     void turn();
     void players(Player* player1, Player* player2, Player* player3, Player* player4);
 
+    Box* box() const;
+    
     struct Iterator
     {
         using iterator_category = std::random_access_iterator_tag;
@@ -29,12 +31,6 @@ public:
         {
             player_ptr++;
             return *this;
-        };
-        Iterator &operator++(int)
-        {
-            Iterator tmp = *this;
-            ++(*this);
-            return tmp;
         };
         friend bool operator==(const Iterator &a, const Iterator &b) { return a.player_ptr == b.player_ptr; };
         friend bool operator!=(const Iterator &a, const Iterator &b) { return a.player_ptr != b.player_ptr; };
