@@ -53,21 +53,9 @@ void Game::command_Internal(const std::string& command) {
 	if (!Game::Initialized()) { throw std::runtime_error("Game not initialized!"); }
 
 	if (command == "show") {
-		static int counter = 0;
-		switch (counter % 3) {
-		case 0: 
-			output_.printTable(table_);
-			break;
-		case 1:
-			output_.printList(table_);
-			break;
-		case 2:
-			output_.printBalances(table_);
-			break;
-		default: 
-			break;
-		}
-		counter++;
+		output_.printTable(table_);
+		output_.printList(table_);
+		output_.printBalances(table_);
 	}
 	else {
 		output_.printCommandError(command);

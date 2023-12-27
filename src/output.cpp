@@ -10,11 +10,9 @@ Output::~Output() { gameLog_.close(); }
 
 void Output::updateLog(const std::string& message) {
 	gameLog_ << message << "\n";
+	Game::Log(message);
 }
 void Output::printTable(Table& table) {
-	clearConsole();
-	std::cout << "Feature not completed \n";
-
 	// ------------------------ CREATE BUFFER ---------------------------
 
 	constexpr int TABLE_SIZE = 9;
@@ -89,27 +87,27 @@ void Output::printTable(Table& table) {
 	delete[] table_str;
 }
 void Output::printList(Table& table) {
-	clearConsole();
-	std::cout << "Feature not implemented\n";
-	/*
-	for(Player* p : table){
-		std::cout << p->name() << ": ";
-		for(Box owned by p){ std::cout << box << ", "; }
-		std::cout << "\b\b  \n";
+	Game::Log("Possessions :");
+	for (auto pp = table.BeginPlayer(); pp != table.EndPlayer(); ++pp)
+	{
+		std::string msg = "Player " + std::to_string((*pp).ID()) + " : ";
+		for (auto pb = table.BeginBox(); pb != table.EndBox(); ++pb) {
+			if (((LateralBox*)(&*pb))->owner() == &*pp) {
+				//msg += *pb.name();
+				//msg += " ";
+			}
+		}
+		Game::Log(msg);
 	}
-	*/
+	Game::Log("");
 }
 void Output::printBalances(Table& table) {
-	clearConsole();
 	Game::Log("Balances:");
 	for (auto p = table.BeginPlayer(); p != table.EndPlayer(); ++p) {
 		Game::Log("Player " + std::to_string((*p).ID()) + " : " + std::to_string((*p).balance()) + "$");
 	}
-
+	Game::Log("");
 }
 void Output::printCommandError(const std::string& command) {
-	clearConsole();
 	Game::Log(command + " is not a recognized command!");
 }
-
-void Output::clearConsole() { system("cls"); }

@@ -18,8 +18,6 @@ public:
 
 private:
 	std::ofstream gameLog_;
-
-	void clearConsole();
 };
 
 #endif // !OUTPUT
