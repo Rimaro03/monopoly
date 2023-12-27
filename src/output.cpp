@@ -61,13 +61,13 @@ void Output::printTable(Table& table) {
 			table_str[y][x][2] = type; 
 		} // DEBUG
 	}
-	for (auto p = table.players().begin(); p != table.players().end(); ++p) {
-		int x = Game::X((**p).indexMove());
-		int y = Game::Y((**p).indexMove());
+	for (Player* p : table.players()) {
+		int x = Game::X(p->indexMove());
+		int y = Game::Y(p->indexMove());
 
-		int character_position = ((**p).indexMove() % 7 == 0)? 3 : 4;
+		int character_position = (p->indexMove() % 7 == 0)? 3 : 4;
 		while (table_str[y][x][character_position] != ' ') { character_position++; }
-		table_str[y][x][character_position] = '0' + (char)(**p).ID();
+		table_str[y][x][character_position] = '0' + (char)p->ID();
 	}
 
 	// --------------- PRINT BUFFER -------------------
@@ -87,12 +87,13 @@ void Output::printTable(Table& table) {
 }
 void Output::printList(Table& table) {
 	Game::Log("Possessions :");
-	for (auto pp = table.players().begin(); pp != table.players().end(); ++pp)
+	for (Player* pp : table.players())
 	{
-		std::string msg = "Player " + std::to_string((**pp).ID()) + " : ";
-		for (auto pb = table.map().begin(); pb != table.map().end(); ++pb) {
-			if (((LateralBox*)(&**pb))->owner() == &**pp) {
-				msg += Game::GetCoordinate((**pb).id()) + " ";
+		std::string msg = "Player " + std::to_string(pp->ID()) + " : ";
+		for (Box* pb : table.map()) {
+
+			if (((LateralBox*)(&*pb))->owner() == pp) {
+				msg += Game::GetCoordinate(pb->id()) + " ";
 			}
 		}
 		Game::Log(msg);
@@ -101,8 +102,8 @@ void Output::printList(Table& table) {
 }
 void Output::printBalances(Table& table) {
 	Game::Log("Balances:");
-	for (auto p = table.players().begin(); p != table.players().end(); ++p) {
-		Game::Log("Player " + std::to_string((**p).ID()) + " : " + std::to_string((**p).balance()) + "$");
+	for (Player* p : table.players()) {
+		Game::Log("Player " + std::to_string(p->ID()) + " : " + std::to_string(p->balance()) + "$");
 	}
 	Game::Log("");
 }
