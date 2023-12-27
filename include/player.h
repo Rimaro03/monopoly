@@ -4,7 +4,7 @@
 #include "declaration.h"
 #include <iostream>
 #include <string>
-#include <vector>
+#include <array>
 
 class Player {
 private:
@@ -88,6 +88,11 @@ public:
      * @brief print to the log the end of the turn
     */
     void endTurn();
+
+    /**
+     * @brief remove a player from the game
+    */
+    void removePlayer(Table* table);
 };
 
 #endif

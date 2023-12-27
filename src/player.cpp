@@ -92,3 +92,12 @@ int Player::throwDice() {
 void Player::endTurn() {
     Game::UpdateLog("- Giocatore " + std::to_string(ID()) + " ha finito il turno");
 }
+void Player::removePlayer(Table* table) {
+    std::array<Box*, 28> boxMap = table->map();
+    for(Box* box : boxMap){
+        if(((LateralBox*)box)->owner() == this){
+            ((LateralBox*)box)->owner(nullptr);
+        }
+    }
+    this->balance(-1);
+}

@@ -1,4 +1,4 @@
-#include <array>
+
 #include "human.h"
 #include "game.h"
 
@@ -7,7 +7,7 @@ Human::Human(const unsigned int ID, int balance) : Player(ID, balance) {}
 void Human::turn(Table* table) {
     if(balance() < 0){
         Game::UpdateLog("- Giocatore " + std::to_string(ID()) + " è stato eliminato");
-        // remove player from Game
+        Player::removePlayer(table);
         return;
     }
     Player::move();
@@ -40,8 +40,7 @@ void Human::turn(Table* table) {
         return;
     }
     else if (box->owner() == this){
-        // Should works, but I will test it later
-        if(box->house()){
+        if(box->house() && !box->hotel()){
             if(Player::balance() - box->houseRent() >= 0){
                 Game::Log("Vuoi costruire un albergo sulla casella " + Game::GetCoordinate(indexMove()) + " per " + std::to_string(box->hotelPrice()) + " fiorini? (s)");
                 std::string answer;
@@ -54,7 +53,7 @@ void Human::turn(Table* table) {
                 }
             }
         } 
-        else {
+        else if(!box->house() && !box->hotel()){
             if(Player::balance() - box->housePrice() >= 0){
                 Game::Log("Vuoi costruire una casa sulla casella " + Game::GetCoordinate(indexMove()) + " per " + std::to_string(box->housePrice()) + " fiorini? (s)");
                 std::string answer;
@@ -73,7 +72,7 @@ void Human::turn(Table* table) {
         }
         else {
             Game::UpdateLog("- Giocatore " + std::to_string(Player::ID()) + " e' stato eliminato");
-            // remove player from Game
+            Player::removePlayer(table);
             return;
         }
     }
