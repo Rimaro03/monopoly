@@ -80,7 +80,7 @@ void Table::turn()
     }
 }
 
-Box* Table::box() const
+Box** Table::box()
 {
-    return *map_;
+    return map_;
 }

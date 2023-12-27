@@ -13,9 +13,9 @@ public:
     void turn();
     void players(Player* player1, Player* player2, Player* player3, Player* player4);
 
-    Box* box() const;
+    Box** box();
     
-    struct Iterator
+    struct PlayerIterator
     {
         using iterator_category = std::random_access_iterator_tag;
         using difference_type = std::ptrdiff_t;
@@ -23,24 +23,24 @@ public:
         using pointer = Player **;
         using reference = Player &;
 
-        Iterator(pointer ptr) : player_ptr{ptr} {};
-        ~Iterator() {}
+        PlayerIterator(pointer ptr) : player_ptr{ptr} {};
+        ~PlayerIterator() {}
         reference operator*() const { return **player_ptr; };
         pointer operator->() { return player_ptr; };
-        Iterator &operator++()
+        PlayerIterator &operator++()
         {
             player_ptr++;
             return *this;
         };
-        friend bool operator==(const Iterator &a, const Iterator &b) { return a.player_ptr == b.player_ptr; };
-        friend bool operator!=(const Iterator &a, const Iterator &b) { return a.player_ptr != b.player_ptr; };
+        friend bool operator==(const PlayerIterator &a, const PlayerIterator &b) { return a.player_ptr == b.player_ptr; };
+        friend bool operator!=(const PlayerIterator &a, const PlayerIterator &b) { return a.player_ptr != b.player_ptr; };
 
     private:
-        pointer player_ptr;
+        Player** player_ptr;
     };
 
-    Iterator begin() { return Iterator(&players_[0]); };
-    Iterator end() { return Iterator(&players_[4]); };
+    PlayerIterator begin() { return PlayerIterator(&players_[0]); };
+    PlayerIterator end() { return PlayerIterator(&players_[4]); };
 
     // aggiungere iteratore per le box
 
