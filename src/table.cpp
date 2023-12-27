@@ -54,6 +54,15 @@ Table::Table()
     map_[21] = new SideBox(21, false);
 }
 
+Table::~Table()
+{
+    for (size_t i = 0; i < 28; i++)
+    {
+        delete map_[i];
+    }
+    
+}
+
 void Table::players(Player* player1, Player* player2, Player* player3, Player* player4)
 {
     players_[0] = player1;
@@ -67,6 +76,6 @@ void Table::turn()
     for (size_t i = 0; i < 4; i++)
     {
         //controllo partita finita o giocatore ha perso
-        players_[i]->turn();
+        players_[i]->turn(this);
     }
 }

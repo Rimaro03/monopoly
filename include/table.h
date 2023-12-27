@@ -7,10 +7,10 @@
 class Table
 {
 public:
-    Table(); // e aggiungere set per i players
-    void turn();
-    //distruttore
+    Table();
+    ~Table();
 
+    void turn();
     void players(Player* player1, Player* player2, Player* player3, Player* player4);
 
     struct Iterator
