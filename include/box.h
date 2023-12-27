@@ -11,6 +11,7 @@ public:
     Box(unsigned int ID);
     void id(unsigned int ID);
     unsigned int id() const;
+    bool side() {return (id_ % 7 == 0);};
 };
 
 #endif
