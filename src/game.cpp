@@ -1,5 +1,6 @@
 #include "game.h"
-
+#include "player.h"
+#include "human.h"
 #include <iostream>
 
 Game::Game() : gameType_(-1) { }
@@ -22,10 +23,14 @@ void Game::init_Internal(const std::string& arg) {
 	//human_ = Human();
 	//for (int i = 0; i < 4; i++) { bot_[i] = Bot(); }
 	
-	//prove
-	/*Player players[4] = {Player(0, 0), Player(1,0), Player(2,0), Player(3,0)};
-	const Table table = Table(players);
-	output_.printTable(table);*/
+	/*
+	Human players[4] = {Human(0, 0), Human(1,0), Human(2,0), Human(3,0)};
+	Table table = Table(players);
+	output_.printTable(table);
+	for(auto p = table.begin(); p != table.end(); ++p)
+	{
+		std::cout << (*p).ID() << " ";
+	}*/
 
 	if (arg == "human") { gameType_ = 0; }
 	else if (arg == "computer") { gameType_ = 1; }
