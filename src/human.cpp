@@ -79,7 +79,12 @@ void Human::turn(Table* table) {
     }
     else if (box->owner() != this){
         if(Player::payPlayer(*(box->owner()), *box)){
-            Game::UpdateLog("- Giocatore " + std::to_string(Player::ID()) + " ha pagato " + std::to_string(box->hotelRent()) + " fiorini al giocatore " + std::to_string(box->owner()->ID()) + " per pernottamento nella casella " + Game::GetCoordinate(indexMove()));
+            if(box->hotel()){
+                Game::UpdateLog("- Giocatore " + std::to_string(Player::ID()) + " ha pagato " + std::to_string(box->hotelRent()) + " fiorini al giocatore " + std::to_string(box->owner()->ID()) + " per pernottamento nella casella " + Game::GetCoordinate(indexMove()));
+            }
+            else if(box->house()){
+                Game::UpdateLog("- Giocatore " + std::to_string(Player::ID()) + " ha pagato " + std::to_string(box->houseRent()) + " fiorini al giocatore " + std::to_string(box->owner()->ID()) + " per pernottamento nella casella " + Game::GetCoordinate(indexMove()));
+            }
         }
         else {
             Game::UpdateLog("- Giocatore " + std::to_string(Player::ID()) + " e' stato eliminato");
