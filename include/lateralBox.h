@@ -2,8 +2,7 @@
 #define LATERALBOX_H
 #include "box.h"
 #include "boxType.h"
-
-class Player;
+#include "declaration.h"
 
 class LateralBox : public Box {
 private:

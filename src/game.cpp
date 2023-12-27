@@ -7,7 +7,7 @@
 #include "player.h"
 #include "human.h"
 
-Game::Game() : gameType_(-1), human_(1, START_BALANCE), /*bot_{Bot(1, START_BALANCE), Bot(2, START_BALANCE), Bot(3, START_BALANCE), Bot(4, START_BALANCE)}*/ { }
+Game::Game() : gameType_(-1), human_(1, START_BALANCE), bot_{Bot(1, START_BALANCE), Bot(2, START_BALANCE), Bot(3, START_BALANCE), Bot(4, START_BALANCE)} { }
 
 Game& Game::Get() { 
 	static Game instance_;
