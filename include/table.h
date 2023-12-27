@@ -69,8 +69,6 @@ public:
     BoxIterator BeginBox() { return BoxIterator(&map_[0]); };
     BoxIterator EndBox() { return BoxIterator(&map_[28]); };
 
-    // aggiungere iteratore per le box
-
 private:
     Box *map_[28];
     Player *players_[4];

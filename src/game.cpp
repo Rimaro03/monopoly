@@ -2,8 +2,6 @@
 
 #include <iostream>
 #include <string>
-#include <Windows.h>
-
 #include "rules.h"
 #include "player.h"
 #include "human.h"
