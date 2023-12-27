@@ -10,7 +10,6 @@ Output::~Output() { gameLog_.close(); }
 
 void Output::updateLog(const std::string& message) {
 	gameLog_ << message << "\n";
-	Game::Log(message);
 }
 void Output::printTable(Table& table) {
 	// ------------------------ CREATE BUFFER ---------------------------

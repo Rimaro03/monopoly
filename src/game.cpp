@@ -46,6 +46,7 @@ void Game::run_Internal() {
 }
 void Game::updateLog_Internal(const std::string& message) { 
 	output_.updateLog(message); 
+	Log(message);
 }
 void Game::command_Internal(const std::string& command) {
 	if (!Game::Initialized()) { throw std::runtime_error("Game not initialized!"); }
