@@ -13,6 +13,8 @@ public:
 
     void turn();
     void players(Player *player1, Player *player2, Player *player3, Player *player4);
+    
+    bool hasWinner() const;
 
     std::array<Box*, 28>& map();
     std::array<Player*, 4>& players();

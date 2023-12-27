@@ -34,15 +34,11 @@ void Game::run_Internal() {
 	if (!Game::Initialized()) { throw std::runtime_error("Game not initialized!"); }
 
 	//Log("Hello world!");
-	Command("show");
-	table_.turn();
-	/*
-	while(//table.is_there_a_winner?){
-		table.turn();
+	while(table_.hasWinner()){
+		table_.turn();
 	}
 
-	Log("The winner is " + table.winner()->name() + "!");
-	*/
+	Log("Game ended");
 }
 void Game::updateLog_Internal(const std::string& message) { 
 	output_.updateLog(message); 

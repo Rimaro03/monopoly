@@ -5,7 +5,7 @@
 #include "sideBox.h"
 #include "lateralBox.h"
 
-Table::Table()
+Table::Table() : players_{nullptr, nullptr, nullptr, nullptr}
 {
     int ecoCount = 8;
     int standardCount = 10;
@@ -70,8 +70,10 @@ void Table::players(Player *player1, Player *player2, Player *player3, Player *p
 
 void Table::turn()
 {
-    for (Player *p : players_)
+    for (Player* p : players_) {
+        if (!p) { throw std::runtime_error("Player is null!"); }
         p->turn(this);
+    }
 }
 
 std::array<Box *, 28>& Table::map()
@@ -82,4 +84,11 @@ std::array<Box *, 28>& Table::map()
 std::array<Player *, 4>& Table::players()
 {
     return players_;
+}
+
+bool Table::hasWinner() const {
+    for (Player* p : players_) {
+        if (p->balance() > 0) { return true; }
+    }
+    return false;
 }
