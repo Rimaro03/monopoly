@@ -4,12 +4,15 @@
 #include "boxType.h"
 #include "declaration.h"
 
-class LateralBox : public Box {
+class LateralBox : public Box
+{
 private:
-    Player* owner_;
     const BoxType type_;
-    int housePrice_;
+    Player *owner_;
+
     int price_;
+
+    int housePrice_;
     int hotelPrice_;
 
     int houseRent_;
@@ -17,25 +20,21 @@ private:
     bool house_;
     bool hotel_;
 
-    public: 
+public:
     LateralBox(const unsigned int ID, BoxType type);
 
-    //TODO: invece di salvarmi tutto qua, mi riprendo i dati da rules.h tramite BoxType
-    Player* owner() const;
     BoxType type() const;
-    void owner(Player* owner);
+    Player *owner() const;
+    void owner(Player *owner);
 
-    //TODO: basta un set/get price e un set/get rent
+    // TODO: basta un get price e un get rent
     int price() const;
-    int housePrice() const;
-    int hotelPrice() const;
-
-    int houseRent() const;
-    int hotelRent() const;
+    int buildingPrice() const;
+    int buildingRent() const;
 
     bool house() const;
-    bool hotel() const;
     void house(bool house);
+    bool hotel() const;
     void hotel(bool hotel);
 };
 

@@ -33,24 +33,32 @@ int LateralBox::price() const
     return price_;
 }
 
-int LateralBox::housePrice() const
+int LateralBox::buildingPrice() const
 {
-    return housePrice_;
+    if(!house() && !hotel())
+    {
+        return housePrice_;
+    }
+    else if(house())
+    {
+        return hotelPrice_;
+    }
+    else{
+        return -1;
+    }
 }
 
-int LateralBox::hotelPrice() const
+int LateralBox::buildingRent() const
 {
-    return hotelPrice_;
-}
-
-int LateralBox::houseRent() const
-{
-    return houseRent_;
-}
-
-int LateralBox::hotelRent() const
-{
-    return hotelRent_;
+    if(house()){
+        return houseRent_;
+    }
+    else if(hotel()){
+        return hotelRent_;
+    }
+    else{
+        return 0;
+    }
 }
 
 bool LateralBox::house() const

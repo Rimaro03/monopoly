@@ -39,9 +39,9 @@ void Bot::turn(Table* table){
     }
     else if (box->owner() == this){
         if(box->house() && !box->hotel()){
-            if(Player::balance() - box->houseRent() >= 0){
+            if(Player::balance() - box->buildingRent() >= 0){
                 if(rand() % 4 == 0){
-                    Player::balance(Player::balance() - box->hotelPrice());
+                    Player::balance(Player::balance() - box->buildingPrice());
                     box->hotel(true);
                     box->house(false);
                     Game::UpdateLog("- Giocatore " + std::to_string(Player::ID()) + "  ha migliorato una casa in albergo sul terreno " + Game::GetCoordinate(indexMove()));
@@ -49,9 +49,9 @@ void Bot::turn(Table* table){
             }
         } 
         else if(!box->house() && !box->hotel()){
-            if(Player::balance() - box->housePrice() >= 0){
+            if(Player::balance() - box->buildingPrice() >= 0){
                 if(rand() % 4 == 0){
-                    Player::balance(Player::balance() - box->housePrice());
+                    Player::balance(Player::balance() - box->buildingPrice());
                     box->house(true);
                     Game::UpdateLog("- Giocatore " + std::to_string(Player::ID()) + "  ha costruito una casa sul terreno " + Game::GetCoordinate(indexMove()));
                 }
@@ -61,10 +61,10 @@ void Bot::turn(Table* table){
     else if (box->owner() != this){
         if(Player::payPlayer(box->owner(), box)){
             if(box->hotel()){
-                Game::UpdateLog("- Giocatore " + std::to_string(Player::ID()) + " ha pagato " + std::to_string(box->hotelRent()) + " fiorini al giocatore " + std::to_string(box->owner()->ID()) + " per pernottamento nella casella " + Game::GetCoordinate(indexMove()));
+                Game::UpdateLog("- Giocatore " + std::to_string(Player::ID()) + " ha pagato " + std::to_string(box->buildingRent()) + " fiorini al giocatore " + std::to_string(box->owner()->ID()) + " per pernottamento nella casella " + Game::GetCoordinate(indexMove()));
             }
             else if(box->house()){
-                Game::UpdateLog("- Giocatore " + std::to_string(Player::ID()) + " ha pagato " + std::to_string(box->houseRent()) + " fiorini al giocatore " + std::to_string(box->owner()->ID()) + " per pernottamento nella casella " + Game::GetCoordinate(indexMove()));
+                Game::UpdateLog("- Giocatore " + std::to_string(Player::ID()) + " ha pagato " + std::to_string(box->buildingRent()) + " fiorini al giocatore " + std::to_string(box->owner()->ID()) + " per pernottamento nella casella " + Game::GetCoordinate(indexMove()));
             }
         }
         else {

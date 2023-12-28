@@ -49,21 +49,21 @@ bool Player::buy(LateralBox& box) {
 }
 bool Player::payPlayer(Player* player, LateralBox* box) {
     if(box->hotel() && !box->house()){
-        if(balance() - box->hotelRent() < 0){
+        if(balance() - box->buildingRent() < 0){
             player->balance(player->balance() + balance());
             return false;
         } else {
-            balance(balance() - box->hotelRent());
-            player->balance(player->balance() + box->hotelRent());
+            balance(balance() - box->buildingRent());
+            player->balance(player->balance() + box->buildingRent());
             return true;
         }
     } else if(box->house() && !box->hotel()){
-        if(balance() - box->houseRent() < 0){
+        if(balance() - box->buildingRent() < 0){
             player->balance(player->balance() + balance());
             return false;
         } else {
-            balance(balance() - box->houseRent());
-            player->balance(player->balance() + box->houseRent());
+            balance(balance() - box->buildingRent());
+            player->balance(player->balance() + box->buildingRent());
             return true;
         }
     } 
@@ -71,16 +71,16 @@ bool Player::payPlayer(Player* player, LateralBox* box) {
 }
 
 bool Player::addHouse(LateralBox& box) {
-    if(balance() - box.housePrice() >= 0 && !box.hotel() && !box.house()){
-        balance(balance() - box.housePrice());
+    if(balance() - box.buildingPrice() >= 0 && !box.hotel() && !box.house()){
+        balance(balance() - box.buildingPrice());
         box.house(true);
         return true;
     } 
     return false;
 }
 bool Player::addHotel(LateralBox& box) {
-    if(balance() - box.hotelPrice() >= 0 && !box.hotel() && box.house()){
-        balance(balance() - box.hotelPrice());
+    if(balance() - box.buildingPrice() >= 0 && !box.hotel() && box.house()){
+        balance(balance() - box.buildingPrice());
         box.hotel(true);
         return true;
     } 
