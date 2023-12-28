@@ -3,7 +3,7 @@
 #include "rules.h"
 
 LateralBox::LateralBox(const unsigned int ID, BoxType type)
-    : Box::Box(ID), type_{type}, owner_{nullptr}
+    : Box::Box(ID), type_{type}, owner_{nullptr}, hotel_{false}, house_{false}
 {
     price_ = TERRAIN_COST[type];
     housePrice_ = HOTEL_COST[type];

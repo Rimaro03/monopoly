@@ -1,6 +1,7 @@
 
 #include "human.h"
 #include "game.h"
+#include "rules.h"
 
 Human::Human(const unsigned int ID, int balance) : Player(ID, balance) {}
 
@@ -15,7 +16,7 @@ void Human::turn(Table* table) {
     Player::move();
 
     if(indexMove() < Player::lastPosition()){
-        balance(balance() + 20);
+        balance(balance() + START_PASS_BONUS);
         Game::UpdateLog("- Giocatore " + std::to_string(Player::ID()) +" e' passato dal via e ha ritirato 20 fiorini");
     }
 
@@ -24,7 +25,7 @@ void Human::turn(Table* table) {
         return;
     }
 
-    std::array<Box*, 28> boxMap = table->map();
+    std::array<Box*, BOX_COUNT>& boxMap = table->map();
     Box* boxUnknow = boxMap[indexMove()];
     LateralBox* box = (LateralBox*) boxUnknow;
 

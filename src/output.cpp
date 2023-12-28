@@ -112,7 +112,8 @@ void Output::printList(Table& table) {
 void Output::printBalances(Table& table) {
 	Game::Log("Balances:");
 	for (Player* p : table.players()) {
-		Game::Log("Player " + std::to_string(p->ID()) + " : " + std::to_string(p->balance()) + "$");
+		std::string money_str = p->balance() >= 0 ? std::to_string(p->balance()) + "$" : "---";
+		Game::Log("Player " + std::to_string(p->ID()) + " : " + money_str);
 	}
 	Game::Log("");
 }

@@ -37,7 +37,13 @@ void Game::run_Internal() {
 		table_.turn();
 	}
 
-	Log("Game ended");
+	// determina il vincitore
+	for (Player* p : table_.players()) {
+		if (p->balance() >= 0) {
+			Game::UpdateLog("- Giocatore " + std::to_string(p->ID()) + " ha vinto la partita");
+			break;
+		}
+	}
 }
 void Game::updateLog_Internal(const std::string& message) { 
 	output_.updateLog(message); 

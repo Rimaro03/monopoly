@@ -24,7 +24,7 @@ public:
 
 private:
     //usare gli array con il loro iteratore
-    std::array<Box*, BOXES> map_;
+    std::array<Box*, BOX_COUNT> map_;
     std::array<Player*, PLAYERS_COUNT> players_;
 };
 

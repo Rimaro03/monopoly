@@ -1,6 +1,7 @@
 #include "player.h"
 
 #include "game.h"
+#include "rules.h"
 
 /* Constructors */
 Player::Player(const unsigned int ID, int balance) : ID_{ID}, balance_{balance} {
@@ -36,7 +37,7 @@ void Player::move() {
     int dice2 = throwDice();
     Game::UpdateLog("- Giocatore " + std::to_string(ID()) + " ha tirato i dadi ottenendo un valore di " + std::to_string(dice1 + dice2));
     lastPosition_ = indexMove();
-    indexMove((indexMove_ + dice1 + dice2) % 28);
+    indexMove((indexMove_ + dice1 + dice2) % BOX_COUNT);
 }
 bool Player::buy(LateralBox& box) {
     if(balance() - box.price() < 0){
@@ -93,8 +94,7 @@ void Player::endTurn() {
     Game::UpdateLog("- Giocatore " + std::to_string(ID()) + " ha finito il turno");
 }
 void Player::removePlayer(Table* table) {
-    std::array<Box*, 28> boxMap = table->map();
-    for(Box* box : boxMap){
+    for(Box* box : table->map()){
         LateralBox* lateralBox = (LateralBox*) box;
         if(lateralBox->owner() == this){
             lateralBox->owner(nullptr);
