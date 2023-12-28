@@ -4,6 +4,8 @@
 #include "table.h"
 #include <fstream>
 
+constexpr int GRID_SIZE = 9;
+
 class Output
 {
 public:
@@ -18,6 +20,7 @@ public:
 
 private:
 	std::ofstream gameLog_;
+	std::string grid[GRID_SIZE][GRID_SIZE];
 };
 
 #endif // !OUTPUT

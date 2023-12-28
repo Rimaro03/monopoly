@@ -5,93 +5,85 @@
 
 #include "game.h"
 
-Output::Output() : gameLog_("log.txt", std::fstream::out) { }
+Output::Output() : gameLog_("log.txt", std::fstream::out), grid() { }
 Output::~Output() { gameLog_.close(); }
 
 void Output::updateLog(const std::string& message) {
 	gameLog_ << message << "\n";
 }
 void Output::printTable(Table& table) {
-	// ------------------------ CREATE BUFFER ---------------------------
-
-	constexpr int TABLE_SIZE = 9;
-	std::string** table_str = new std::string * [TABLE_SIZE];
-	for (int i = 0; i < TABLE_SIZE; i++) { table_str[i] = new std::string[TABLE_SIZE]; }
-
 	// ------------- SET BUFFER ------------
 
-	for (int i = 0; i < TABLE_SIZE; i++) { // clear all
-		for (int j = 0; j < TABLE_SIZE; j++) {
-			table_str[i][j] = "          ";
+	for (int i = 0; i < GRID_SIZE; i++) { // clear all
+		for (int j = 0; j < GRID_SIZE; j++) {
+			grid[i][j] = "        ";
 		}
 	}
-	for (char i = 1; i < (char)TABLE_SIZE; i++) { // NUMERI E LETTERE (COORDINATE)
-		table_str[i][0][2] = '@' + i;
-		table_str[0][i][2] = '0' + i;
+	for (char i = 1; i < (char)GRID_SIZE; i++) { // NUMERI E LETTERE (COORDINATE)
+		grid[i][0][2] = '@' + i;
+		grid[0][i][2] = '0' + i;
 	}
+	grid[GRID_SIZE-1][GRID_SIZE-1][1] = 'P'; // PUNTO DI PARTENZA
 
-	// ----------------SET ANGULAR BOXES-------------
-
-	table_str[1][1] = "  |    |  ";
-	table_str[TABLE_SIZE - 1][1] = "  |    |  ";
-	table_str[1][TABLE_SIZE - 1] = "  |    |  ";
-	table_str[TABLE_SIZE - 1][TABLE_SIZE - 1] = "  |    |  ";
-
-	// -----------------SET LATERAL BOXES-----------------
-	for (int i = 2; i < TABLE_SIZE - 1; i++) {
-		table_str[1][i] = " |      | ";
-		table_str[i][1] = " |      | ";
-		table_str[TABLE_SIZE - 1][i] = " |      | ";
-		table_str[i][TABLE_SIZE - 1] = " |      | ";
-	}
-
+	// DISEGNA LE CLASSI DELLE CASELLE, CASE E ALBERGHI
 
 	for (Box* box : table.map()) {
 		int x = Game::X(box->id());
 		int y = Game::Y(box->id());
 
+		// DISEGNA IL BORDO SINISTRO
+		grid[y][x][0] = '|';
+
 		if (!box->side()) {
-			char type;
 			switch (((LateralBox*)box)->type()) {
-			case luxury: type = 'L'; break;
-			case standard: type = 'S'; break;
-			case economic: type = 'E'; break;
-			default: throw std::runtime_error("Invalid box type!");
+			case luxury: 
+				grid[y][x][1] = 'L'; 
+				break;
+			case standard: 
+				grid[y][x][1] = 'S';
+				break;
+			case economic: 
+				grid[y][x][1] = 'E';
+				break;
+			default: 
+				throw std::runtime_error("Invalid box type!");
 			}
 
-			char houseHotel = ' ';
-			if (((LateralBox*)box)->house()) { houseHotel = '*'; }
-			else if (((LateralBox*)box)->hotel()) { houseHotel = '^'; }
-
-			table_str[y][x][2] = type; 
-			table_str[y][x][3] = houseHotel;
-
-
+			if (((LateralBox*)box)->house()) { grid[y][x][2] = '*'; }
+			else if (((LateralBox*)box)->hotel()) { grid[y][x][2] = '^'; }
 		} // DEBUG
 	}
+
+	// DISEGNA I GIOCATORI
+
 	for (Player* p : table.players()) {
 		int x = Game::X(p->indexMove());
 		int y = Game::Y(p->indexMove());
 
-		int character_position = (p->indexMove() % 7 == 0)? 3 : 4;
-		while (table_str[y][x][character_position] != ' ') { character_position++; }
-		table_str[y][x][character_position] = '0' + (char)p->ID();
+		int character_position = 2;
+		while (grid[y][x][character_position] != ' ') { character_position++; }
+		grid[y][x][character_position] = '0' + (char)p->ID();
 	}
 
-	// --------------- PRINT BUFFER -------------------
+	// BORDI SINISTRI DI TUTTE LE CASELLE
+	for (Box* b : table.map()) {
+		int x = Game::X(b->id());
+		int y = Game::Y(b->id());
 
-	for (int i = 0; i < TABLE_SIZE; i++) {
-		for (int j = 0; j < TABLE_SIZE; j++) {
-			std::cout << table_str[i][j];
+		int character_position = 2;
+		while (grid[y][x][character_position] != ' ') { character_position++; }
+		grid[y][x][character_position] = '|';
+	}
+
+	// --------------- PRINT -------------------
+
+	for (int i = 0; i < GRID_SIZE; i++) {
+		for (int j = 0; j < GRID_SIZE; j++) {
+			std::cout << grid[i][j];
 		}
-		std::cout << "\n\n\n\n";
+		Game::Log("\n");
 	}
-	std::cout << std::endl;
-
-	// ---------------------- DELETE BUFFER --------------------
-
-	for (int i = 0; i < TABLE_SIZE; i++) { delete[] table_str[i]; }
-	delete[] table_str;
+	Game::Log("");
 }
 void Output::printList(Table& table) {
 	Game::Log("Possessions :");
