@@ -1,11 +1,19 @@
 #include "lateralBox.h"
 #include "player.h"
+#include "rules.h"
 
-LateralBox::LateralBox(const unsigned int ID, BoxType type, const int price, const int housePrice, const int hotelPrice, const int houseRent, const int hotelRent)
-    : Box::Box(ID), type_{type}, price_{price}, housePrice_{housePrice}, hotelPrice_{hotelPrice}, houseRent_{houseRent}, hotelRent_{hotelRent}, owner_{nullptr}, house_(0), hotel_(0)
-{ }
+LateralBox::LateralBox(const unsigned int ID, BoxType type)
+    : Box::Box(ID), type_{type}, owner_{nullptr}
+{
+    price_ = TERRAIN_COST[type];
+    housePrice_ = HOTEL_COST[type];
+    hotelPrice_ = HOTEL_COST[type];
 
-Player* LateralBox::owner() const
+    houseRent_ = HOUSE_RENT[type];
+    hotelRent_ = HOTEL_RENT[type];
+}
+
+Player *LateralBox::owner() const
 {
     return owner_;
 }
@@ -15,7 +23,7 @@ BoxType LateralBox::type() const
     return type_;
 }
 
-void LateralBox::owner(Player* owner)
+void LateralBox::owner(Player *owner)
 {
     owner_ = owner;
 }

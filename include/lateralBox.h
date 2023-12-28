@@ -8,23 +8,24 @@ class LateralBox : public Box {
 private:
     Player* owner_;
     const BoxType type_;
-    const int price_;
-    const int housePrice_;
-    const int hotelPrice_;
+    int housePrice_;
+    int price_;
+    int hotelPrice_;
 
-    const int houseRent_;
-    const int hotelRent_;
+    int houseRent_;
+    int hotelRent_;
     bool house_;
     bool hotel_;
 
     public: 
-    LateralBox(const unsigned int ID, BoxType type, const int price, const int housePrice, const int hotelPrice, const int houseRent, const int hotelRent);
+    LateralBox(const unsigned int ID, BoxType type);
 
-    //invece ti salvarmi tutto qua, mi riprendo i dati da rules.h tramite BoxType
+    //TODO: invece di salvarmi tutto qua, mi riprendo i dati da rules.h tramite BoxType
     Player* owner() const;
     BoxType type() const;
     void owner(Player* owner);
 
+    //TODO: basta un set/get price e un set/get rent
     int price() const;
     int housePrice() const;
     int hotelPrice() const;

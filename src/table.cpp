@@ -33,15 +33,15 @@ Table::Table() : players_{nullptr, nullptr, nullptr, nullptr}
         Box *casella;
         if (count < ECONOMIC_BOXES_COUNT)
         {
-            casella = new LateralBox(indici[i], BoxType::economic, 6, 3, 3, 2, 4);
+            casella = new LateralBox(indici[i], BoxType::economic);
         }
         else if (count < ECONOMIC_BOXES_COUNT + STANDARD_BOXES_COUNT)
         {
-            casella = new LateralBox(indici[i], BoxType::standard, 10, 5, 5, 4, 8);
+            casella = new LateralBox(indici[i], BoxType::standard);
         }
         else
         {
-            casella = new LateralBox(indici[i], BoxType::luxury, 20, 10, 10, 7, 14);
+            casella = new LateralBox(indici[i], BoxType::luxury);
         }
 
         map_[indici[i]] = casella;
