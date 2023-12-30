@@ -1,5 +1,6 @@
 #include "bot.h"
 #include "game.h"
+#include "rules.h"
 
 Bot::Bot(const unsigned int ID, int balance) : Player(ID, balance) {}
 
@@ -15,7 +16,7 @@ void Bot::turn(Table* table){
 
     if(indexMove() < Player::lastPosition()){
         balance(balance() + START_PASS_BONUS);
-        Game::UpdateLog("- Giocatore " + std::to_string(Player::ID()) +" e' passato dal via e ha ritirato 20 fiorini");
+        Game::UpdateLog("- Giocatore " + std::to_string(Player::ID()) +" e' passato dal via e ha ritirato " + std::to_string(START_PASS_BONUS) + " fiorini");
     }
 
     if(Player::indexMove() % 7 == 0){
