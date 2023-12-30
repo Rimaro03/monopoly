@@ -56,33 +56,45 @@ Table::~Table()
         delete[] b;
 }
 
-void Table::players(Player* players[PLAYERS_COUNT])
+void Table::players(Player *players[PLAYERS_COUNT])
 {
-    for (int i = 0; i < PLAYERS_COUNT; i++) { players_[i] = players[i]; }
+    for (int i = 0; i < PLAYERS_COUNT; i++)
+    {
+        players_[i] = players[i];
+    }
 }
 
 void Table::turn()
 {
-    for (Player* p : players_) {
-        if (!p) { throw std::runtime_error("Player is null!"); }
+    for (Player *p : players_)
+    {
+        if (!p)
+        {
+            throw std::runtime_error("Player is null!");
+        }
         p->turn(this);
     }
 }
 
-std::array<Box *, 28>& Table::map()
+std::array<Box *, BOX_COUNT> &Table::map()
 {
     return map_;
 }
 
-std::array<Player *, 4>& Table::players()
+std::array<Player *, PLAYERS_COUNT> &Table::players()
 {
     return players_;
 }
 
-bool Table::hasWinner() const {
+bool Table::hasWinner() const
+{
     int counter = 0;
-    for (Player* p : players_) {
-        if (p->balance() >= 0) { counter++; }
+    for (Player *p : players_)
+    {
+        if (p->balance() >= 0)
+        {
+            counter++;
+        }
     }
     return counter == 1;
 }

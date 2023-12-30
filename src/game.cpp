@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <string>
+#include <algorithm>
 #include "rules.h"
 #include "player.h"
 #include "human.h"
@@ -113,13 +114,28 @@ void Game::run_Internal()
 			turnsCount++;
 	}
 
-	// determina il vincitore
-	for (Player *p : table_.players())
+	// determina il vincitore o i vincitori (partite tra bot finite in pareggio)
+	int prices[4];
+	for (int i = 0; i < table_.players().size(); i++)
 	{
-		if (p->balance() >= 0)
+		prices[i] = table_.players().at(i)->balance();
+	}
+	
+	std::array<Player *, PLAYERS_COUNT> winners = {nullptr, nullptr, nullptr, nullptr};
+	int maxBalance = *std::max_element(prices, prices + 4);
+	for (int i = 0; i < table_.players().size(); i++)
+	{
+		if (table_.players().at(i)->balance() >= maxBalance)
 		{
-			Game::UpdateLog("- Giocatore " + std::to_string(p->ID()) + " ha vinto la partita");
-			break;
+			winners[i] = table_.players().at(i);
+		}
+	}
+
+	for (Player *winner : winners)
+	{
+		if (winner != nullptr)
+		{
+			Game::UpdateLog("- Giocatore " + std::to_string(winner->ID()) + " ha vinto la partita");
 		}
 	}
 }
