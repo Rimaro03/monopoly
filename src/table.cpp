@@ -7,10 +7,6 @@
 
 Table::Table() : players_{nullptr, nullptr, nullptr, nullptr}
 {
-    int ecoCount = 8;
-    int standardCount = 10;
-    int luxCount = 6;
-
     // generazione indici
     int indici[24]; //{0:1, 1:2, 2:3, 3:4, 4:5, 5:6, 6:8, 7:9, 8:10...}
     int j = 0;
