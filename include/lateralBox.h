@@ -27,7 +27,6 @@ public:
     Player *owner() const;
     void owner(Player *owner);
 
-    // TODO: basta un get price e un get rent
     int price() const;
     int buildingPrice() const;
     int buildingRent() const;
