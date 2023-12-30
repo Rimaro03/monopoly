@@ -44,7 +44,8 @@ private:
     void log_Internal(const std::string& message);
     void run_Internal();
 
-    void setPlayers();
+    void choosePlayersTurnOrder(std::array<Player*, PLAYERS_COUNT>& player_ptrs);
+    void getWinner();
 };
 
 #endif

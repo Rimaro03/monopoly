@@ -84,14 +84,18 @@ void Output::printTable(Table& table) {
 	Game::Log("");
 }
 void Output::printList(Table& table) {
+	// in table.players() i giocatori sono ordinati per ordine di turno quindi vanno riordinati
+	std::array<Player*, PLAYERS_COUNT> players = { nullptr, nullptr, nullptr, nullptr };
+	for (Player* p : table.players()) { players[p->ID() - 1] = p; }
+
 	Game::Log("Possessions :");
-	for (Player* pp : table.players())
+	for (Player* p : players)
 	{
-		std::string msg = "Player " + std::to_string(pp->ID()) + " : ";
+		std::string msg = "Player " + std::to_string(p->ID()) + " : ";
 		for (Box* pb : table.map()) {
 			if (pb->side()) { continue; }
 
-			if (((LateralBox*)(pb))->owner() == pp) {
+			if (((LateralBox*)(pb))->owner() == p) {
 				msg += Game::GetCoordinate(pb->id()) + " ";
 			}
 		}
@@ -100,8 +104,12 @@ void Output::printList(Table& table) {
 	Game::Log("");
 }
 void Output::printBalances(Table& table) {
+	// in table.players() i giocatori sono ordinati per ordine di turno quindi vanno riordinati
+	std::array<Player*, PLAYERS_COUNT> players = { nullptr, nullptr, nullptr, nullptr };
+	for (Player* p : table.players()) { players[p->ID() - 1] = p; }
+
 	Game::Log("Balances:");
-	for (Player* p : table.players()) {
+	for (Player* p : players) {
 		std::string money_str = p->balance() >= 0 ? std::to_string(p->balance()) + "$" : "---";
 		Game::Log("Player " + std::to_string(p->ID()) + " : " + money_str);
 	}

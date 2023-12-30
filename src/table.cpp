@@ -56,7 +56,7 @@ Table::~Table()
         delete[] b;
 }
 
-void Table::players(Player *players[PLAYERS_COUNT])
+void Table::players(std::array<Player*, PLAYERS_COUNT>& players)
 {
     for (int i = 0; i < PLAYERS_COUNT; i++)
     {

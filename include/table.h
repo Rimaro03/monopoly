@@ -15,7 +15,7 @@ public:
     ~Table();
 
     void turn();
-    void players(Player* players[PLAYERS_COUNT]);
+    void players(std::array<Player*, PLAYERS_COUNT>& players);
     
     bool hasWinner() const;
 

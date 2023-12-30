@@ -22,15 +22,8 @@ void Game::Log(const std::string &message) { Get().log_Internal(message); }
 
 bool Game::Initialized() { return Get().gameType_ != -1; }
 
-void Game::setPlayers()
+void Game::choosePlayersTurnOrder(std::array<Player*, PLAYERS_COUNT>& player_ptrs)
 {
-	Player *player_ptrs[PLAYERS_COUNT] = {&bots_[0], &bots_[1], &bots_[2], &bots_[3]};
-	if (gameType_ == 0)
-	{
-		player_ptrs[0] = &human_;
-	}
-
-	// LANCIO DEI DADI
 	bool finished = false;
 	int dices[PLAYERS_COUNT] = {0, 0, 0, 0};
 	int player_ptrs_index = 0;
@@ -58,25 +51,15 @@ void Game::setPlayers()
 				player_ptrs_index = i;
 				winner_count++;
 			}
-			else if (dices[i] < max)
-			{
-				dices[i] = -1;
-			} // non � tra i finalisti
+			else if (dices[i] < max) { dices[i] = -1; } // non e' tra i finalisti
 		}
-		if (winner_count == 1)
-		{
-			finished = true;
-		} // abbiamo un vincitore
+		if (winner_count == 1) { finished = true; } // abbiamo un vincitore
 	}
 
 	// RIORDINA I GIOCATORI
-	Player *ordered_player_ptrs[PLAYERS_COUNT] = {nullptr, nullptr, nullptr, nullptr};
-	for (int i = 0; i < PLAYERS_COUNT; i++)
-	{
-		ordered_player_ptrs[i] = player_ptrs[(player_ptrs_index + i) % PLAYERS_COUNT];
-	}
-
-	table_.players(ordered_player_ptrs);
+	std::array<Player*, PLAYERS_COUNT> tmp = { nullptr, nullptr, nullptr, nullptr };
+	for (int i = 0; i < PLAYERS_COUNT; i++) { tmp[i] = player_ptrs[(player_ptrs_index + i) % PLAYERS_COUNT]; }
+	for (int i = 0; i < PLAYERS_COUNT; i++) { player_ptrs[i] = tmp[i]; }
 }
 
 void Game::init_Internal(const std::string &arg)
@@ -96,7 +79,10 @@ void Game::init_Internal(const std::string &arg)
 		throw std::invalid_argument("Invalid game type argument : " + arg);
 	}
 
-	setPlayers();
+	std::array<Player*, PLAYERS_COUNT> player_ptrs = { &bots_[0], &bots_[1], &bots_[2], &bots_[3] };
+	if (gameType_ == 0) { player_ptrs[0] = &human_; }
+	choosePlayersTurnOrder(player_ptrs);
+	table_.players(player_ptrs);
 }
 void Game::run_Internal()
 {
@@ -110,34 +96,10 @@ void Game::run_Internal()
 	while (!table_.hasWinner() && (gameType_ == 1 ? turnsCount < MAX_BOT_GAME_TURNS : true))
 	{
 		table_.turn();
-		if ((gameType_ == 1))
-			turnsCount++;
+		if (gameType_ == 1) { turnsCount++; }
 	}
 
-	// determina il vincitore o i vincitori (partite tra bot finite in pareggio)
-	int prices[4];
-	for (int i = 0; i < table_.players().size(); i++)
-	{
-		prices[i] = table_.players().at(i)->balance();
-	}
-	
-	std::array<Player *, PLAYERS_COUNT> winners = {nullptr, nullptr, nullptr, nullptr};
-	int maxBalance = *std::max_element(prices, prices + 4);
-	for (int i = 0; i < table_.players().size(); i++)
-	{
-		if (table_.players().at(i)->balance() >= maxBalance)
-		{
-			winners[i] = table_.players().at(i);
-		}
-	}
-
-	for (Player *winner : winners)
-	{
-		if (winner != nullptr)
-		{
-			Game::UpdateLog("- Giocatore " + std::to_string(winner->ID()) + " ha vinto la partita");
-		}
-	}
+	getWinner();
 }
 void Game::updateLog_Internal(const std::string &message)
 {
@@ -155,6 +117,47 @@ void Game::show_Internal()
 	output_.printBalances(table_);
 }
 void Game::log_Internal(const std::string &message) { std::cout << message << std::endl; }
+
+void Game::getWinner() {
+	// determina il vincitore o i vincitori (partite tra bot finite in pareggio)
+	int balances[4] = {0, 0, 0, 0};
+	for (int i = 0; i < table_.players().size(); i++)
+	{
+		balances[i] = table_.players().at(i)->balance();
+	}
+
+	std::array<Player*, PLAYERS_COUNT> winners = { nullptr, nullptr, nullptr, nullptr };
+	int maxBalance = *std::max_element(balances, balances + PLAYERS_COUNT);
+	for (int i = 0; i < PLAYERS_COUNT; i++)
+	{
+		if (table_.players().at(i)->balance() >= maxBalance)
+		{
+			winners[i] = table_.players().at(i);
+		}
+	}
+
+	int winnersCount = PLAYERS_COUNT - std::count(winners.begin(), winners.end(), nullptr);
+	if (winnersCount == 1) {
+		for (Player* winner : winners)
+		{
+			if (!winner){ continue; }
+
+			Game::UpdateLog("- Giocatore " + std::to_string(winner->ID()) + " ha vinto la partita");
+			break;
+		}
+	}
+	else {
+		std::string msg;
+		Game::UpdateLog("- Partita finita in pareggio per ");
+		for (Player* winner : winners)
+		{
+			if (!winner){ continue; }
+
+			msg += " giocatore " + std::to_string(winner->ID()) + " ";
+		}
+		Game::UpdateLog(msg);
+	}
+}
 
 std::string Game::GetCoordinate(int position)
 {
