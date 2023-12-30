@@ -15,7 +15,7 @@ public:
     ~Table();
 
     void turn();
-    void players(Player *player1, Player *player2, Player *player3, Player *player4);
+    void players(Player* players[PLAYERS_COUNT]);
     
     bool hasWinner() const;
 

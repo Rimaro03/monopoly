@@ -12,8 +12,6 @@ void Output::updateLog(const std::string& message) {
 	gameLog_ << message << "\n";
 }
 void Output::printTable(Table& table) {
-	// ------------- SET BUFFER ------------
-
 	for (int i = 0; i < GRID_SIZE; i++) { // clear all
 		for (int j = 0; j < GRID_SIZE; j++) {
 			grid[i][j] = "        ";

@@ -34,7 +34,7 @@ private:
     Output output_;
     Table table_;
     Human human_;
-    Bot bot_[4];
+    Bot bots_[4];
 
     Game();
 
@@ -43,6 +43,8 @@ private:
     void updateLog_Internal(const std::string& message);
     void log_Internal(const std::string& message);
     void run_Internal();
+
+    void setPlayers();
 };
 
 #endif

@@ -60,12 +60,9 @@ Table::~Table()
         delete[] b;
 }
 
-void Table::players(Player *player1, Player *player2, Player *player3, Player *player4)
+void Table::players(Player* players[PLAYERS_COUNT])
 {
-    players_[0] = player1;
-    players_[1] = player2;
-    players_[2] = player3;
-    players_[3] = player4;
+    for (int i = 0; i < PLAYERS_COUNT; i++) { players_[i] = players[i]; }
 }
 
 void Table::turn()

@@ -6,7 +6,7 @@
 #include "player.h"
 #include "human.h"
 
-Game::Game() : gameType_(-1), human_(1, START_BALANCE), bot_{Bot(1, START_BALANCE), Bot(2, START_BALANCE), Bot(3, START_BALANCE), Bot(4, START_BALANCE)} {}
+Game::Game() : gameType_(-1), human_(1, START_BALANCE), bots_{Bot(1, START_BALANCE), Bot(2, START_BALANCE), Bot(3, START_BALANCE), Bot(4, START_BALANCE)} {}
 
 Game &Game::Get()
 {
@@ -21,8 +21,51 @@ void Game::Log(const std::string &message) { Get().log_Internal(message); }
 
 bool Game::Initialized() { return Get().gameType_ != -1; }
 
+void Game::setPlayers() {
+	Player* player_ptrs[PLAYERS_COUNT] = { &bots_[0], &bots_[1], &bots_[2], &bots_[3] };
+	if (gameType_ == 0) { player_ptrs[0] = &human_; }
+
+	// LANCIO DEI DADI
+	bool finished = false;
+	int dices[PLAYERS_COUNT] = { 0, 0, 0, 0 };
+	int player_ptrs_index = 0;
+	while (!finished)
+	{
+		int max = 0;
+		int winner_count = 0;
+		for (int i = 0; i < PLAYERS_COUNT; i++) // throw dices
+		{
+			if(dices[i] == -1) { continue; } // vuol dire che siamo al secondo lancio e il giocatore non è tra i finalisti
+
+			dices[i] = player_ptrs[i]->throwDice();
+			if (dices[i] > max) { max = dices[i]; }
+		}
+		for (int i = 0; i < PLAYERS_COUNT; i++) // determina i finalisti
+		{
+			if (dices[i] == max) 
+			{ 
+				player_ptrs_index = i;
+				winner_count++; 
+			} 
+			else if (dices[i] < max) { dices[i] = -1; } // non è tra i finalisti
+		}
+		if(winner_count == 1) { finished = true; } // abbiamo un vincitore
+	}
+
+	// RIORDINA I GIOCATORI
+	Player* ordered_player_ptrs[PLAYERS_COUNT] = { nullptr, nullptr, nullptr, nullptr };
+	for (int i = 0; i < PLAYERS_COUNT; i++) 
+	{
+		ordered_player_ptrs[i] = player_ptrs[(player_ptrs_index + i) % PLAYERS_COUNT];
+	}
+	
+	table_.players(ordered_player_ptrs);
+}
+
 void Game::init_Internal(const std::string &arg)
 {
+	srand((unsigned int)time(NULL));
+
 	if (arg == "human")
 	{
 		gameType_ = 0;
@@ -36,16 +79,7 @@ void Game::init_Internal(const std::string &arg)
 		throw std::invalid_argument("Invalid game type argument : " + arg);
 	}
 
-	if (gameType_ == 0)
-	{
-		table_.players(&human_, &bot_[1], &bot_[2], &bot_[3]);
-	}
-	else
-	{
-		table_.players(&bot_[0], &bot_[1], &bot_[2], &bot_[3]);
-	}
-
-	srand((unsigned int)time(NULL));
+	setPlayers();
 }
 void Game::run_Internal()
 {
@@ -54,10 +88,6 @@ void Game::run_Internal()
 		throw std::runtime_error("Game not initialized!");
 	}
 
-	/*
-	TODO: each player throw dices, the one who obtains the highest number moves first, and so on. 
-	In case of tie, the players must make another shot.
-	*/
 	while (!table_.hasWinner())
 	{
 		table_.turn();
