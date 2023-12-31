@@ -53,10 +53,12 @@ Table::Table() : players_{nullptr, nullptr, nullptr, nullptr}
 Table::~Table()
 {
     for (Box *b : map_)
-        delete[] b;
+    {
+        delete b;
+    }
 }
 
-void Table::players(std::array<Player*, PLAYERS_COUNT>& players)
+void Table::players(std::array<Player *, PLAYERS_COUNT> &players)
 {
     for (int i = 0; i < PLAYERS_COUNT; i++)
     {
