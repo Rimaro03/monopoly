@@ -1,3 +1,5 @@
+//FILIPPO BATTISTI - 2066659
+
 #ifndef GAME_H
 #define GAME_H
 
@@ -30,7 +32,7 @@ public:
     
     static bool Initialized();
 private: 
-    int gameType_;
+    GameType gameType_;
     Output output_;
     Table table_;
     Human human_;

@@ -1,3 +1,5 @@
+//FILIPPO BATTISTI - 2066659
+
 #include "output.h"
 
 #include <iostream>
@@ -5,10 +7,21 @@
 
 #include "game.h"
 
-Output::Output() : gameLog_("log.txt", std::fstream::out), grid() { }
+Output::Output() : grid(), isInitialized_(false) { }
 Output::~Output() { gameLog_.close(); }
 
+void Output::init(GameType gameType) {
+	if (isInitialized_) { return; }
+
+	if (gameType == GameType::PLAYER_VS_ENTITY) { gameLog_.open("pve_game_log.txt"); }
+	else if (gameType == GameType::ENTITY_VS_ENTITY) { gameLog_.open("eve_game_log.txt"); }
+	else { throw std::runtime_error("Invalid game type!"); }
+
+	if (!gameLog_.is_open()) { throw std::runtime_error("Cannot open log file!"); }
+	isInitialized_ = true;
+}
 void Output::updateLog(const std::string& message) {
+	if(!isInitialized_) { throw std::runtime_error("Output not initialized!"); }
 	gameLog_ << message << "\n";
 }
 void Output::printTable(Table& table) {
@@ -114,7 +127,4 @@ void Output::printBalances(Table& table) {
 		Game::Log("Player " + std::to_string(p->ID()) + " : " + money_str);
 	}
 	Game::Log("");
-}
-void Output::printCommandError(const std::string& command) {
-	Game::Log(command + " is not a recognized command!");
 }

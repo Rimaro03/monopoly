@@ -1,13 +1,16 @@
+//FILIPPO BATTISTI - 2066659
+
 #include "game.h"
 
 #include <iostream>
 #include <string>
 #include <algorithm>
+
 #include "rules.h"
 #include "player.h"
 #include "human.h"
 
-Game::Game() : gameType_(-1), human_(1, START_BALANCE), bots_{Bot(1, START_BALANCE), Bot(2, START_BALANCE), Bot(3, START_BALANCE), Bot(4, START_BALANCE)} {}
+Game::Game() : gameType_(GameType::INVALID), human_(1, START_BALANCE), bots_{Bot(1, START_BALANCE), Bot(2, START_BALANCE), Bot(3, START_BALANCE), Bot(4, START_BALANCE)} {}
 
 Game &Game::Get()
 {
@@ -20,7 +23,7 @@ void Game::Show() { Get().show_Internal(); }
 void Game::UpdateLog(const std::string &message) { Get().updateLog_Internal(message); }
 void Game::Log(const std::string &message) { Get().log_Internal(message); }
 
-bool Game::Initialized() { return Get().gameType_ != -1; }
+bool Game::Initialized() { return Get().gameType_ != GameType::INVALID; }
 
 void Game::choosePlayersTurnOrder(std::array<Player*, PLAYERS_COUNT>& player_ptrs)
 {
@@ -66,37 +69,27 @@ void Game::init_Internal(const std::string &arg)
 {
 	srand((unsigned int)time(NULL));
 
-	if (arg == "human")
-	{
-		gameType_ = 0;
-	}
-	else if (arg == "computer")
-	{
-		gameType_ = 1;
-	}
-	else
-	{
-		throw std::invalid_argument("Invalid game type argument : " + arg);
-	}
+	if (arg == "human") { gameType_ = GameType::PLAYER_VS_ENTITY; }
+	else if (arg == "computer") { gameType_ = GameType::ENTITY_VS_ENTITY; }
+	else { throw std::invalid_argument("Invalid game type argument : " + arg); }
+
+	output_.init(gameType_);
 
 	std::array<Player*, PLAYERS_COUNT> player_ptrs = { &bots_[0], &bots_[1], &bots_[2], &bots_[3] };
-	if (gameType_ == 0) { player_ptrs[0] = &human_; }
+	if (gameType_ == GameType::PLAYER_VS_ENTITY) { player_ptrs[0] = &human_; }
 	choosePlayersTurnOrder(player_ptrs);
 	table_.players(player_ptrs);
 }
 void Game::run_Internal()
 {
-	if (!Game::Initialized())
-	{
-		throw std::runtime_error("Game not initialized!");
-	}
+	if (!Game::Initialized()) { throw std::runtime_error("Game not initialized!"); }
 
 	// gioco: finché non c'è un vincitore e, se è un game tra bot, non raggiungo il limite dei turni
 	int turnsCount = 0;
-	while (!table_.hasWinner() && (gameType_ == 1 ? turnsCount < MAX_BOT_GAME_TURNS : true))
+	while (!table_.hasWinner() && (gameType_ == GameType::PLAYER_VS_ENTITY || turnsCount < MAX_BOT_GAME_TURNS))
 	{
 		table_.turn();
-		if (gameType_ == 1) { turnsCount++; }
+		turnsCount++;
 	}
 
 	getWinner();
