@@ -3,6 +3,8 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include <array>
+
 #include "table.h"
 #include "human.h"
 #include "bot.h"
@@ -39,7 +41,7 @@ private:
     Output output_; // output
     Table table_; // tabella di gioco
     Human human_; // giocatore umano
-    Bot bots_[4]; // giocatori bot
+    std::array<Bot, PLAYERS_COUNT> bots_; // giocatori bot
 
     Game();
 
