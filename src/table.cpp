@@ -5,14 +5,14 @@
 #include "sideBox.h"
 #include "lateralBox.h"
 
-Table::Table() : players_{nullptr, nullptr, nullptr, nullptr}
+Table::Table() : players_{}
 {
     // generazione indici
-    int indici[24]; //{0:1, 1:2, 2:3, 3:4, 4:5, 5:6, 6:8, 7:9, 8:10...}
+    std::array<int, (BOXES_PER_ROW - 1) * 4> indici{}; //{0:1, 1:2, 2:3, 3:4, 4:5, 5:6, 6:8, 7:9, 8:10...}
     int j = 0;
-    for (size_t i = 0; i < 24; i++)
+    for (size_t i = 0; i < indici.size(); i++)
     {
-        if (j % 7 == 0)
+        if (j % (BOXES_PER_ROW) == 0)
         {
             j++;
         }
@@ -21,10 +21,10 @@ Table::Table() : players_{nullptr, nullptr, nullptr, nullptr}
     }
 
     // randomizzazione indici con shuffle()
-    std::shuffle(indici, indici + 24, std::default_random_engine(time(NULL)));
+    std::shuffle(indici.begin(), indici.end(), std::default_random_engine(time(NULL)));
 
     int count = 0;
-    for (unsigned int i = 0; i < 24; i++)
+    for (unsigned int i = 0; i < indici.size(); i++)
     {
         Box *casella;
         if (count < ECONOMIC_BOXES_COUNT)
@@ -45,9 +45,9 @@ Table::Table() : players_{nullptr, nullptr, nullptr, nullptr}
     }
 
     map_[0] = new SideBox(0, true);
-    map_[7] = new SideBox(7, false);
-    map_[14] = new SideBox(14, false);
-    map_[21] = new SideBox(21, false);
+    map_[BOXES_PER_ROW] = new SideBox(7, false);
+    map_[BOXES_PER_ROW * 2] = new SideBox(14, false);
+    map_[BOXES_PER_ROW * 3] = new SideBox(21, false);
 }
 
 Table::~Table()

@@ -10,6 +10,7 @@
 
 class Game{
 public:
+    // Non è possibile copiare o assegnare Game
     Game& operator=(const Game&) = delete;
 
     // Ritorna l'istanza di Game
@@ -27,16 +28,18 @@ public:
     static void Run();
     // Ritorna le coordinate di una casella
     static std::string GetCoordinate(int position);
+    // trasforma da posizione lineare a posizione x
     static int X(int position);
+    // trasforma da posizione lineare a posizione y
     static int Y(int position);
     
     static bool Initialized();
 private: 
-    GameType gameType_;
-    Output output_;
-    Table table_;
-    Human human_;
-    Bot bots_[4];
+    GameType gameType_; // tipo di gioco (pve, eve)
+    Output output_; // output
+    Table table_; // tabella di gioco
+    Human human_; // giocatore umano
+    Bot bots_[4]; // giocatori bot
 
     Game();
 

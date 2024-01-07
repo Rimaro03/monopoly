@@ -19,8 +19,8 @@ public:
     
     bool hasWinner() const;
 
-    std::array<Box*, 28>& map();
-    std::array<Player*, 4>& players();
+    std::array<Box*, BOX_COUNT>& map();
+    std::array<Player*, PLAYERS_COUNT>& players();
 
 private:
     std::array<Box*, BOX_COUNT> map_;

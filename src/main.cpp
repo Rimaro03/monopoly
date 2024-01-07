@@ -1,9 +1,8 @@
-#include <iostream>
 #include "game.h"
-
+#include <array>
 int main(int argc, char* argv[]) {
     argc = 2;
-    argv[1] = "computer";
+    argv[1] = "human";
 
     if (argc != 2) { throw std::invalid_argument("args count must be 1!"); }
 

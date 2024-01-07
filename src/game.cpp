@@ -27,40 +27,35 @@ bool Game::Initialized() { return Get().gameType_ != GameType::INVALID; }
 
 void Game::choosePlayersTurnOrder(std::array<Player*, PLAYERS_COUNT>& player_ptrs)
 {
-	bool finished = false;
-	int dices[PLAYERS_COUNT] = {0, 0, 0, 0};
+	std::array<int, PLAYERS_COUNT> dices{};// inizializzo tutti i dadi a 0
+	
 	int player_ptrs_index = 0;
-	while (!finished)
+	bool finished = false;
+	while (!finished) // finche' non abbiamo un vincitore
 	{
 		int max = 0;
 		int winner_count = 0;
-		for (int i = 0; i < PLAYERS_COUNT; i++) // throw dices
+		for (int i = 0; i < PLAYERS_COUNT; i++) // lancio dei dadi
 		{
-			if (dices[i] == -1)
-			{
-				continue;
-			} // vuol dire che siamo al secondo lancio e il giocatore non � tra i finalisti
+			if (dices[i] == -1) { continue; } // vuol dire che siamo al secondo lancio e il giocatore non e' tra i finalisti
 
-			dices[i] = player_ptrs[i]->throwDice();
-			if (dices[i] > max)
-			{
-				max = dices[i];
-			}
+			dices[i] = player_ptrs[i]->throwDice(); // lancia il dado
+			if (dices[i] > max) { max = dices[i]; } // tiene aggiornato il punteggio massimo
 		}
 		for (int i = 0; i < PLAYERS_COUNT; i++) // determina i finalisti
 		{
-			if (dices[i] == max)
-			{
+			if (dices[i] == max) // controlla se il giocatore ha ottenuto il punteggio massimo allora e' tra i finalisti
+			{ 
 				player_ptrs_index = i;
 				winner_count++;
 			}
-			else if (dices[i] < max) { dices[i] = -1; } // non e' tra i finalisti
+			else if (dices[i] < max) { dices[i] = -1; } // non e' tra i finalisti e il suo punteggio viene settato a -1
 		}
 		if (winner_count == 1) { finished = true; } // abbiamo un vincitore
 	}
 
 	// RIORDINA I GIOCATORI
-	std::array<Player*, PLAYERS_COUNT> tmp = { nullptr, nullptr, nullptr, nullptr };
+	std::array<Player*, PLAYERS_COUNT> tmp{};
 	for (int i = 0; i < PLAYERS_COUNT; i++) { tmp[i] = player_ptrs[(player_ptrs_index + i) % PLAYERS_COUNT]; }
 	for (int i = 0; i < PLAYERS_COUNT; i++) { player_ptrs[i] = tmp[i]; }
 }
@@ -113,14 +108,11 @@ void Game::log_Internal(const std::string &message) { std::cout << message << st
 
 void Game::getWinner() {
 	// determina il vincitore o i vincitori (partite tra bot finite in pareggio)
-	int balances[4] = {0, 0, 0, 0};
-	for (int i = 0; i < table_.players().size(); i++)
-	{
-		balances[i] = table_.players().at(i)->balance();
-	}
+	std::array<int, PLAYERS_COUNT> balances{}; // inizializza l'array dei bilanci a 0
+	for (int i = 0; i < PLAYERS_COUNT; i++) { balances[i] = table_.players().at(i)->balance(); } // assegna i bilanci dei giocatori
 
-	std::array<Player*, PLAYERS_COUNT> winners = { nullptr, nullptr, nullptr, nullptr };
-	int maxBalance = *std::max_element(balances, balances + PLAYERS_COUNT);
+	std::array<Player*, PLAYERS_COUNT> winners{}; // inizializza l'array dei vincitori a nullptr
+	int maxBalance = *std::max_element(balances.begin(), balances.end());
 	for (int i = 0; i < PLAYERS_COUNT; i++)
 	{
 		if (table_.players().at(i)->balance() >= maxBalance)
@@ -130,7 +122,7 @@ void Game::getWinner() {
 	}
 
 	int winnersCount = PLAYERS_COUNT - std::count(winners.begin(), winners.end(), nullptr);
-	if (winnersCount == 1) {
+	if (winnersCount == 1) { // un solo vincitore
 		for (Player* winner : winners)
 		{
 			if (!winner){ continue; }
@@ -139,7 +131,7 @@ void Game::getWinner() {
 			break;
 		}
 	}
-	else {
+	else if (winnersCount > 1) { // piu' vincitori
 		std::string msg;
 		Game::UpdateLog("- Partita finita in pareggio per ");
 		for (Player* winner : winners)
@@ -150,31 +142,34 @@ void Game::getWinner() {
 		}
 		Game::UpdateLog(msg);
 	}
+	else { throw std::runtime_error("No winners!"); }
 }
 
 std::string Game::GetCoordinate(int position)
 {
+	if(position < 0 || position >= BOX_COUNT) { throw std::invalid_argument("Invalid position!"); }
+
 	std::string coordinates;
 	coordinates.resize(2);
 
-	if (position < 7)
+	if (position < BOXES_PER_ROW) // la posizione si trova nella riga inferiore (H(2->8))
 	{
 		coordinates[0] = 'H';
 		coordinates[1] = '8' - position;
 	}
-	else if (position < 14)
+	else if (position < BOXES_PER_ROW * 2) // la posizione si trova nella colonna sinistra ((H->B)1)
 	{
-		coordinates[0] = 'H' - position + 7;
+		coordinates[0] = 'H' - position + BOXES_PER_ROW;
 		coordinates[1] = '1';
 	}
-	else if (position < 21)
+	else if (position < BOXES_PER_ROW * 3) // la posizione si trova nella riga superiore (A(1->7))
 	{
 		coordinates[0] = 'A';
-		coordinates[1] = '1' + position - 14;
+		coordinates[1] = '1' + position - (BOXES_PER_ROW * 2);
 	}
-	else if (position < 28)
+	else // la posizione si trova nella colonna destra ((A->G)8)
 	{
-		coordinates[0] = 'A' + position - 21;
+		coordinates[0] = 'A' + position - (BOXES_PER_ROW * 3);
 		coordinates[1] = '8';
 	}
 
@@ -182,40 +177,43 @@ std::string Game::GetCoordinate(int position)
 }
 int Game::X(int position)
 {
+	if(position < 0 || position >= BOX_COUNT) { throw std::invalid_argument("Invalid position!"); }
 
-	if (position < 8)
+	if (position < BOXES_PER_ROW)
 	{
-		return 8 - position;
+		return BOXES_PER_ROW - position + 1; // 8
 	}
-	else if (position < 14)
+	else if (position < BOXES_PER_ROW * 2)
 	{
 		return 1;
 	}
-	else if (position < 22)
+	else if (position < BOXES_PER_ROW * 3)
 	{
-		return position - 13;
+		return position - BOXES_PER_ROW * 2 + 1; // 13
 	}
 	else /*pos < 28*/
 	{
-		return 8;
+		return BOXES_PER_ROW + 1;
 	}
 }
 int Game::Y(int position)
 {
-	if (position < 8)
+	if(position < 0 || position >= BOX_COUNT) { throw std::invalid_argument("Invalid position!"); }
+
+	if (position < BOXES_PER_ROW)
 	{
-		return 8;
+		return BOXES_PER_ROW + 1; // 8
 	}
-	else if (position < 14)
+	else if (position < BOXES_PER_ROW * 2)
 	{
-		return 15 - position;
+		return BOXES_PER_ROW * 2 - position + 1; // 15
 	}
-	else if (position < 22)
+	else if (position < BOXES_PER_ROW * 3) 
 	{
 		return 1;
 	}
-	else /*pos < 28*/
+	else /*pos < BOX_COUNT*/
 	{
-		return position - 20;
+		return position - BOXES_PER_ROW * 3 + 1; // 20
 	}
 }
