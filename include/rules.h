@@ -2,7 +2,7 @@
 #define RULE_H
 
 constexpr int PLAYERS_COUNT = 4;
-constexpr int BOARD_SIZE = 5;
+constexpr int BOARD_SIZE = 8;
 constexpr int BOXES_PER_ROW = BOARD_SIZE - 1;
 constexpr int BOX_COUNT = BOXES_PER_ROW * 4;
 constexpr int START_PASS_BONUS = 20;
