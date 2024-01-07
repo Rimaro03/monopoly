@@ -154,22 +154,22 @@ std::string Game::GetCoordinate(int position)
 
 	if (position < BOXES_PER_ROW) // la posizione si trova nella riga inferiore (H(2->8))
 	{
-		coordinates[0] = 'H';
+		coordinates[0] = (char)('A' + BOXES_PER_ROW);
 		coordinates[1] = '8' - position;
 	}
 	else if (position < BOXES_PER_ROW * 2) // la posizione si trova nella colonna sinistra ((H->B)1)
 	{
-		coordinates[0] = 'H' - position + BOXES_PER_ROW;
+		coordinates[0] = (char)('A' + 2 * BOXES_PER_ROW - position);
 		coordinates[1] = '1';
 	}
 	else if (position < BOXES_PER_ROW * 3) // la posizione si trova nella riga superiore (A(1->7))
 	{
 		coordinates[0] = 'A';
-		coordinates[1] = '1' + position - (BOXES_PER_ROW * 2);
+		coordinates[1] = (char)('1' + position - (BOXES_PER_ROW * 2));
 	}
 	else // la posizione si trova nella colonna destra ((A->G)8)
 	{
-		coordinates[0] = 'A' + position - (BOXES_PER_ROW * 3);
+		coordinates[0] = (char)('A' + position - 3 * BOXES_PER_ROW);
 		coordinates[1] = '8';
 	}
 
@@ -181,7 +181,7 @@ int Game::X(int position)
 
 	if (position < BOXES_PER_ROW)
 	{
-		return BOXES_PER_ROW - position + 1; // 8
+		return BOXES_PER_ROW - position + 1;
 	}
 	else if (position < BOXES_PER_ROW * 2)
 	{
@@ -189,7 +189,7 @@ int Game::X(int position)
 	}
 	else if (position < BOXES_PER_ROW * 3)
 	{
-		return position - BOXES_PER_ROW * 2 + 1; // 13
+		return position - BOXES_PER_ROW * 2 + 1;
 	}
 	else /*pos < 28*/
 	{

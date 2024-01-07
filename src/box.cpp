@@ -1,5 +1,7 @@
 #include "box.h"
 
+#include "rules.h"
+
 Box::Box(unsigned int ID): id_{ID} {}
 
 void Box::id(unsigned int ID)
@@ -9,4 +11,8 @@ void Box::id(unsigned int ID)
 
 unsigned int Box::id() const {
     return id_;
+}
+bool Box::side()
+{
+    {return (id_ % BOXES_PER_ROW == 0); }
 }

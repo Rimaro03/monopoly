@@ -44,10 +44,7 @@ Table::Table() : players_{}
         count++;
     }
 
-    map_[0] = new SideBox(0, true);
-    map_[BOXES_PER_ROW] = new SideBox(7, false);
-    map_[BOXES_PER_ROW * 2] = new SideBox(14, false);
-    map_[BOXES_PER_ROW * 3] = new SideBox(21, false);
+    for (int i = 0; i < 4; i++) { map_[i * BOXES_PER_ROW] = new SideBox(i * BOXES_PER_ROW, i == 0); }
 }
 
 Table::~Table()
