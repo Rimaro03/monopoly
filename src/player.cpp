@@ -1,3 +1,5 @@
+// Author: Davide Tonolotto - 2073997
+
 #include "player.h"
 
 #include "game.h"
@@ -47,6 +49,8 @@ void Player::move()
     lastPosition_ = indexMove();
     indexMove((indexMove_ + dice1 + dice2) % BOX_COUNT);
 }
+
+
 bool Player::buy(LateralBox &box)
 {
     if (balance() - box.price() < 0)

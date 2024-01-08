@@ -1,3 +1,5 @@
+// Author: Davide Tonolotto - 2073997
+
 #include "bot.h"
 #include "game.h"
 #include "rules.h"
