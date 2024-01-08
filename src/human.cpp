@@ -33,8 +33,8 @@ void Human::turn(Table* table) {
             std::string answer;
             do {
                 Game::Log("Vuoi comprare la casella " + Game::GetCoordinate(indexMove()) + " per " + std::to_string(box->price()) + " fiorini? (s/n)");
-                std::cin >> answer;
-                if(answer == "show") Game::Show();
+                std::getline(std::cin, answer);
+                Game::Command(answer);
             } while((tolower(answer[0]) != 's' && tolower(answer[0]) != 'n') || answer.length() > 1);
 
             if(answer == "s"){
@@ -51,8 +51,8 @@ void Human::turn(Table* table) {
                 std::string answer;
                 do{
                     Game::Log("Vuoi costruire un albergo sulla casella " + Game::GetCoordinate(indexMove()) + " per " + std::to_string(box->buildingPrice()) + " fiorini? (s/n)");
-                    std::cin >> answer;
-                    if(answer == "show") Game::Show();
+                    std::getline(std::cin, answer);
+                    Game::Command(answer);
                 } while((tolower(answer[0]) != 's' && tolower(answer[0]) != 'n') || answer.length() > 1);
 
                 if(answer == "s"){
@@ -67,8 +67,8 @@ void Human::turn(Table* table) {
                 std::string answer;
                 do{
                     Game::Log("Vuoi costruire una casa sulla casella " + Game::GetCoordinate(indexMove()) + " per " + std::to_string(box->buildingPrice()) + " fiorini? (s/n)");
-                    std::cin >> answer;
-                    if(answer == "show") Game::Show();
+                    std::getline(std::cin, answer);
+                    Game::Command(answer);
                 } while((tolower(answer[0]) != 's' && tolower(answer[0]) != 'n') || answer.length() > 1);
 
                 if(answer == "s"){
