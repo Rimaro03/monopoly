@@ -23,6 +23,7 @@ void Game::Show() { Get().show_Internal(); }
 void Game::UpdateLog(const std::string &message) { Get().updateLog_Internal(message); }
 void Game::Log(const std::string &message) { Get().log_Internal(message); }
 
+bool Game::Command(const std::string &command) { return Get().command_Internal(command); }
 bool Game::Initialized() { return Get().gameType_ != GameType::INVALID; }
 
 void Game::choosePlayersTurnOrder(std::array<Player*, PLAYERS_COUNT>& player_ptrs)
@@ -105,6 +106,22 @@ void Game::show_Internal()
 	output_.printBalances(table_);
 }
 void Game::log_Internal(const std::string &message) { std::cout << message << std::endl; }
+
+bool Game::command_Internal(const std::string& command)
+{
+	if (!Game::Initialized()) { throw std::runtime_error("Game not initialized!"); }
+
+	if (command == "show") { 
+		output_.printTable(table_);
+		output_.printList(table_);
+		output_.printBalances(table_);
+	}
+	else if (command == "show table") { output_.printTable(table_); }
+	else if (command == "show list") { output_.printList(table_); }
+	else if (command == "show balances") { output_.printBalances(table_); }
+	else { return false; }
+	return true;
+}
 
 void Game::getWinner() {
 	// determina il vincitore o i vincitori (partite tra bot finite in pareggio)

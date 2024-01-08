@@ -20,8 +20,9 @@ public:
 
     // Inizializza il gioco
     static void Init(const std::string& arg);
-    // Esegue un comando come "show"
-    static void Show();
+    static void Show();    // DA ELIMINARE
+    // Esegue un comando come "show", "show table", "show list", "show balances" e ritorna true se il comando è stato eseguito
+    static bool Command(const std::string& command);
     // Logga in log.txt 
     static void UpdateLog(const std::string& message);
     // Logga in console
@@ -50,6 +51,8 @@ private:
     void updateLog_Internal(const std::string& message);
     void log_Internal(const std::string& message);
     void run_Internal();
+    
+    bool command_Internal(const std::string& command);
 
     void choosePlayersTurnOrder(std::array<Player*, PLAYERS_COUNT>& player_ptrs);
     void getWinner();
