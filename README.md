@@ -8,5 +8,6 @@ Il progetto è stato svolto dal gruppo composto da: Davide Tonolotto, Filippo Ba
    - `show`: stampa le informazioni sulla partita: tavola da gioco, lista delle proprietà acquistate dai giocatori e lista dei saldi dei giocatori
    - `show table`: stampa solamente la tavola da gioco
    - `show list`: stampa le proprietà possedute da ogni giocatore
-   - `show balances`: stampa i giocatori con i loro saldi
-   In caso sia stato inserito un comando invalido, il programma lo ignora
+   - `show balances`: stampa i giocatori con i loro saldi.  
+
+In caso sia stato inserito un comando invalido, il programma lo ignora
