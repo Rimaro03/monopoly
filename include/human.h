@@ -16,12 +16,12 @@ public:
 
     /**
      * @param table pointer to the table
-     * @brief The turn of the human player
+     * The turn of the human player 
      * Available commands:
-     * show: show the all the information about the players
-     * show table: show the table
-     * show balances: show the balances of the players
-     * show list: show the possesions of the players
+     * `show`: show the all the information about the players
+     * `show table`: show the table
+     * `show balances`: show the balances of the players
+     * `show list`: show the possesions of the players
     */
     void turn(Table* table) override;
 };
