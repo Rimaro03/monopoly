@@ -1,5 +1,5 @@
 #include "game.h"
-#include <array>
+
 int main(int argc, char* argv[]) {
     argc = 2;
     argv[1] = "human";

@@ -19,18 +19,17 @@ Game &Game::Get()
 }
 void Game::Init(const std::string &arg) { Get().init_Internal(arg); }
 void Game::Run() { Get().run_Internal(); }
-void Game::Show() { Get().show_Internal(); }
 void Game::UpdateLog(const std::string &message) { Get().updateLog_Internal(message); }
 void Game::Log(const std::string &message) { Get().log_Internal(message); }
+void Game::Command(const std::string &command) { Get().command_Internal(command); }
 
-bool Game::Command(const std::string &command) { return Get().command_Internal(command); }
 bool Game::Initialized() { return Get().gameType_ != GameType::INVALID; }
 
 void Game::choosePlayersTurnOrder(std::array<Player*, PLAYERS_COUNT>& player_ptrs)
 {
 	std::array<int, PLAYERS_COUNT> dices{};// inizializzo tutti i dadi a 0
 	
-	int player_ptrs_index = 0;
+	int player_ptr_index = 0;
 	bool finished = false;
 	while (!finished) // finche' non abbiamo un vincitore
 	{
@@ -47,7 +46,7 @@ void Game::choosePlayersTurnOrder(std::array<Player*, PLAYERS_COUNT>& player_ptr
 		{
 			if (dices[i] == max) // controlla se il giocatore ha ottenuto il punteggio massimo allora e' tra i finalisti
 			{ 
-				player_ptrs_index = i;
+				player_ptr_index = i;
 				winner_count++;
 			}
 			else if (dices[i] < max) { dices[i] = -1; } // non e' tra i finalisti e il suo punteggio viene settato a -1
@@ -57,24 +56,24 @@ void Game::choosePlayersTurnOrder(std::array<Player*, PLAYERS_COUNT>& player_ptr
 
 	// RIORDINA I GIOCATORI
 	std::array<Player*, PLAYERS_COUNT> tmp{};
-	for (int i = 0; i < PLAYERS_COUNT; i++) { tmp[i] = player_ptrs[(player_ptrs_index + i) % PLAYERS_COUNT]; }
-	for (int i = 0; i < PLAYERS_COUNT; i++) { player_ptrs[i] = tmp[i]; }
+	for (int i = 0; i < PLAYERS_COUNT; i++) { tmp[i] = player_ptrs[i]; }
+	for (int i = 0; i < PLAYERS_COUNT; i++) { player_ptrs[i] = tmp[(player_ptr_index + i) % PLAYERS_COUNT]; }
 }
 
 void Game::init_Internal(const std::string &arg)
 {
-	srand((unsigned int)time(NULL));
+	srand((unsigned int)time(NULL)); // inizializza il generatore di numeri casuali
 
-	if (arg == "human") { gameType_ = GameType::PLAYER_VS_ENTITY; }
+	if (arg == "human") { gameType_ = GameType::PLAYER_VS_ENTITY; } 
 	else if (arg == "computer") { gameType_ = GameType::ENTITY_VS_ENTITY; }
 	else { throw std::invalid_argument("Invalid game type argument : " + arg); }
 
-	output_.init(gameType_);
+	output_.init(gameType_); // inizializza il log di output
 
 	std::array<Player*, PLAYERS_COUNT> player_ptrs = { &bots_[0], &bots_[1], &bots_[2], &bots_[3] };
 	if (gameType_ == GameType::PLAYER_VS_ENTITY) { player_ptrs[0] = &human_; }
-	choosePlayersTurnOrder(player_ptrs);
-	table_.players(player_ptrs);
+	choosePlayersTurnOrder(player_ptrs); // sceglie l'ordine dei giocatori
+	table_.players(player_ptrs); // assegna i giocatori al tavolo
 }
 void Game::run_Internal()
 {
@@ -88,26 +87,15 @@ void Game::run_Internal()
 		turnsCount++;
 	}
 
-	getWinner();
+	printWinner();
 }
 void Game::updateLog_Internal(const std::string &message)
 {
 	output_.updateLog(message);
 	Log(message);
 }
-void Game::show_Internal()
-{
-	if (!Game::Initialized())
-	{
-		throw std::runtime_error("Game not initialized!");
-	}
-	output_.printTable(table_);
-	output_.printList(table_);
-	output_.printBalances(table_);
-}
 void Game::log_Internal(const std::string &message) { std::cout << message << std::endl; }
-
-bool Game::command_Internal(const std::string& command)
+void Game::command_Internal(const std::string& command)
 {
 	if (!Game::Initialized()) { throw std::runtime_error("Game not initialized!"); }
 
@@ -119,11 +107,9 @@ bool Game::command_Internal(const std::string& command)
 	else if (command == "show table") { output_.printTable(table_); }
 	else if (command == "show list") { output_.printList(table_); }
 	else if (command == "show balances") { output_.printBalances(table_); }
-	else { return false; }
-	return true;
 }
 
-void Game::getWinner() {
+void Game::printWinner() {
 	// determina il vincitore o i vincitori (partite tra bot finite in pareggio)
 	std::array<int, PLAYERS_COUNT> balances{}; // inizializza l'array dei bilanci a 0
 	for (int i = 0; i < PLAYERS_COUNT; i++) { balances[i] = table_.players().at(i)->balance(); } // assegna i bilanci dei giocatori
@@ -164,73 +150,31 @@ void Game::getWinner() {
 
 std::string Game::GetCoordinate(int position)
 {
-	if(position < 0 || position >= BOX_COUNT) { throw std::invalid_argument("Invalid position!"); }
-
 	std::string coordinates;
-	coordinates.resize(2);
+	coordinates.resize(2); // evita di allocare memoria ogni volta
 
-	if (position < BOXES_PER_ROW) // la posizione si trova nella riga inferiore (H(2->8))
-	{
-		coordinates[0] = (char)('A' + BOXES_PER_ROW);
-		coordinates[1] = '8' - position;
-	}
-	else if (position < BOXES_PER_ROW * 2) // la posizione si trova nella colonna sinistra ((H->B)1)
-	{
-		coordinates[0] = (char)('A' + 2 * BOXES_PER_ROW - position);
-		coordinates[1] = '1';
-	}
-	else if (position < BOXES_PER_ROW * 3) // la posizione si trova nella riga superiore (A(1->7))
-	{
-		coordinates[0] = 'A';
-		coordinates[1] = (char)('1' + position - (BOXES_PER_ROW * 2));
-	}
-	else // la posizione si trova nella colonna destra ((A->G)8)
-	{
-		coordinates[0] = (char)('A' + position - 3 * BOXES_PER_ROW);
-		coordinates[1] = '8';
-	}
+	coordinates += (char)('@' + Y(position)); // '@' = 'A' - 1
+	coordinates += (char)('0' + X(position)); // '0' = '1' - 1
 
 	return coordinates;
 }
 int Game::X(int position)
 {
-	if(position < 0 || position >= BOX_COUNT) { throw std::invalid_argument("Invalid position!"); }
-
-	if (position < BOXES_PER_ROW)
-	{
-		return BOXES_PER_ROW - position + 1;
-	}
-	else if (position < BOXES_PER_ROW * 2)
-	{
-		return 1;
-	}
-	else if (position < BOXES_PER_ROW * 3)
-	{
-		return position - BOXES_PER_ROW * 2 + 1;
-	}
-	else /*pos < 28*/
-	{
-		return BOXES_PER_ROW + 1;
+	switch (position / BOXES_PER_ROW) {
+		case 0: return BOXES_PER_ROW - position + 1;
+		case 1: return 1;
+		case 2: return position - BOXES_PER_ROW * 2 + 1;
+		case 3: return BOXES_PER_ROW + 1;
+		default: throw std::invalid_argument("Invalid position! : " + std::to_string(position));
 	}
 }
 int Game::Y(int position)
 {
-	if(position < 0 || position >= BOX_COUNT) { throw std::invalid_argument("Invalid position!"); }
-
-	if (position < BOXES_PER_ROW)
-	{
-		return BOXES_PER_ROW + 1; // 8
-	}
-	else if (position < BOXES_PER_ROW * 2)
-	{
-		return BOXES_PER_ROW * 2 - position + 1; // 15
-	}
-	else if (position < BOXES_PER_ROW * 3) 
-	{
-		return 1;
-	}
-	else /*pos < BOX_COUNT*/
-	{
-		return position - BOXES_PER_ROW * 3 + 1; // 20
+	switch (position / BOXES_PER_ROW) {
+		case 0: return BOXES_PER_ROW + 1;
+		case 1: return BOXES_PER_ROW * 2 - position + 1;
+		case 2: return 1;
+		case 3: return position - BOXES_PER_ROW * 3 + 1;
+		default: throw std::invalid_argument("Invalid position! : " + std::to_string(position));
 	}
 }

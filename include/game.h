@@ -12,17 +12,10 @@
 
 class Game{
 public:
-    // Non è possibile copiare o assegnare Game
-    Game& operator=(const Game&) = delete;
-
-    // Ritorna l'istanza di Game
-    static Game& Get();
-
     // Inizializza il gioco
     static void Init(const std::string& arg);
-    static void Show();    // DA ELIMINARE
     // Esegue un comando come "show", "show table", "show list", "show balances" e ritorna true se il comando è stato eseguito
-    static bool Command(const std::string& command);
+    static void Command(const std::string& command);
     // Logga in log.txt 
     static void UpdateLog(const std::string& message);
     // Logga in console
@@ -36,6 +29,7 @@ public:
     // trasforma da posizione lineare a posizione y
     static int Y(int position);
     
+    // Ritorna vero se il gioco è stato inizializzato, false altrimenti
     static bool Initialized();
 private: 
     GameType gameType_; // tipo di gioco (pve, eve)
@@ -46,16 +40,20 @@ private:
 
     Game();
 
+    // Ritorna l'istanza di Game
+    static Game& Get();
+
+    // Metodi interni
     void init_Internal(const std::string& arg);
-    void show_Internal();
     void updateLog_Internal(const std::string& message);
     void log_Internal(const std::string& message);
     void run_Internal();
-    
-    bool command_Internal(const std::string& command);
+    void command_Internal(const std::string& command);
 
+    // Sceglie l'ordine dei giocatori
     void choosePlayersTurnOrder(std::array<Player*, PLAYERS_COUNT>& player_ptrs);
-    void getWinner();
+    // Determina il vincitore
+    void printWinner();
 };
 
 #endif
