@@ -1,3 +1,5 @@
+// Author: Davide Tonolotto - 2073997
+
 #ifndef PLAYER_H
 #define PLAYER_H
 #include "lateralBox.h"

@@ -1,3 +1,7 @@
+/**
+ * @author: Leonardo Ongaro - 2074985
+*/
+
 #include "lateralBox.h"
 #include "player.h"
 #include "rules.h"

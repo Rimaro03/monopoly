@@ -3,7 +3,7 @@
 /***********************************************************************
  *
  * This file is used to declare all the classes used in the 
- * project for avoiding circular dependencies
+ * project to avoid circular dependencies
  * 
  * ********************************************************************/
 

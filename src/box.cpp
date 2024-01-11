@@ -1,3 +1,7 @@
+/**
+ * @author: Leonardo Ongaro - 2074985
+*/
+
 #include "box.h"
 
 #include "rules.h"
