@@ -12,47 +12,62 @@
 
 class Game{
 public:
-    // Inizializza il gioco
+    /** @brief Initialize the game. */
     static void Init(const std::string& arg);
-    // Esegue un comando come "show", "show table", "show list", "show balances" e ritorna true se il comando è stato eseguito
+    /**
+    * @brief Execute a command.
+    * @param command : The command to execute, it can be: "show", "show balances", "show list", "show table".
+    */
     static void Command(const std::string& command);
-    // Logga in log.txt 
+    /**
+    * @brief Updates the log.txt file.
+    * @param message : The message to write in the log file.
+    */
     static void UpdateLog(const std::string& message);
-    // Logga in console
+    /**
+    * @brief Writes a message in the console. 
+    * Same as std::cout << message << std::endl.
+    */
     static void Log(const std::string& message);
-    // Esegue il gioco
+    /** @brief Executes the main game loop. */
     static void Run();
-    // Ritorna le coordinate di una casella
+    /** @brief Returns a string representing the coordinate of a position. */
     static std::string GetCoordinate(int position);
-    // trasforma da posizione lineare a posizione x
+    /** @brief Returns the x of the position. */
     static int X(int position);
-    // trasforma da posizione lineare a posizione y
+    /** @brief Returns the y of the position. */
     static int Y(int position);
     
-    // Ritorna vero se il gioco è stato inizializzato, false altrimenti
+    /** @brief Returns true if the game has been initialized. */
     static bool Initialized();
 private: 
-    GameType gameType_; // tipo di gioco (pve, eve)
-    Output output_; // output
-    Table table_; // tabella di gioco
-    Human human_; // giocatore umano
-    std::array<Bot, PLAYERS_COUNT> bots_; // giocatori bot
+    /** @brief The game type*/
+    GameType gameType_;
+    /** @brief The output log manager. */
+    Output output_;
+    /** @brief The game board. */
+    Table table_; 
+    /** @brief The human player. */
+    Human human_;
+    /** @brief The bot players. */
+    std::array<Bot, PLAYERS_COUNT> bots_;
 
     Game();
 
-    // Ritorna l'istanza di Game
+    /* @brief Returns the instance of game. **/
     static Game& Get();
 
-    // Metodi interni
+    /* INTERNAL METHODS */
+
     void init_Internal(const std::string& arg);
     void updateLog_Internal(const std::string& message);
     void log_Internal(const std::string& message);
     void run_Internal();
     void command_Internal(const std::string& command);
 
-    // Sceglie l'ordine dei giocatori
+    /** @brief Choose the player order and initialize the board. */
     void choosePlayersTurnOrder(std::array<Player*, PLAYERS_COUNT>& player_ptrs);
-    // Determina il vincitore
+    /** @brief Determine the winner and prints them. */
     void printWinner();
 };
 

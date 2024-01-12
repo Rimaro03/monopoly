@@ -8,6 +8,7 @@
 #include "gametype.h"
 #include "table.h"
 
+/** @brief The size of the game board. */
 constexpr int GRID_SIZE = BOARD_SIZE + 1;
 
 class Output
@@ -16,21 +17,24 @@ public:
 	Output();
 	~Output();
 
-	// inizializza il log di output in base al tipo di partita [pve (player vs entity), eve (entity vs entity)]
+	/** @brief Initialize the output log based on the game type. */
 	void init(GameType gameType);
-	// aggiorna il log di output
+	/** @brief Updates the output log. */
 	void updateLog(const std::string& message);
-	// stampa la tabella di gioco
+	/** @brief Prints the game board. */
 	void printTable(Table& table);
-	// stampa la lista dei giocatori e le loro proprietà
+	/** @brief Prints the list of player possessions. */
 	void printList(Table& table);
-	// stampa i bilanci dei giocatori
+	/** @brief Prints the players balances. */
 	void printBalances(Table& table);
 
 private:
-	bool isInitialized_; // indica se il log è stato inizializzato
-	std::ofstream gameLog_; // log di output
-	std::string grid[GRID_SIZE][GRID_SIZE]; // buffer necessario per stampare la tabella di gioco
+	/** @brief True if the output has been initialized. */
+	bool isInitialized_;
+	/** @brief The output log file. */
+	std::ofstream gameLog_;
+	/** @brief The grid buffer of the game board needed to print it. */
+	std::string** grid;
 };
 
 #endif // !OUTPUT
