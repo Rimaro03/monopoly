@@ -66,6 +66,7 @@ bool Player::buy(LateralBox &box)
 }
 bool Player::payPlayer(Player *player, LateralBox *box)
 {
+    // Calculate the rent based on the existing buildings
     if (box->hotel() && !box->house())
     {
         if (balance() - box->buildingRent() < 0)
@@ -99,6 +100,7 @@ bool Player::payPlayer(Player *player, LateralBox *box)
 
 bool Player::addHouse(LateralBox &box)
 {
+    // Check if the player has enough money and if the box has no hotel and no house
     if (balance() - box.buildingPrice() >= 0 && !box.hotel() && !box.house())
     {
         balance(balance() - box.buildingPrice());
@@ -109,6 +111,7 @@ bool Player::addHouse(LateralBox &box)
 }
 bool Player::addHotel(LateralBox &box)
 {
+    // Check if the player has enough money and if the box has no hotel and has a house
     if (balance() - box.buildingPrice() >= 0 && !box.hotel() && box.house())
     {
         balance(balance() - box.buildingPrice());
@@ -127,6 +130,7 @@ void Player::endTurn()
 }
 void Player::removePlayer(Table *table)
 {
+    // Clear all the boxes in the table that are owned by the player
     for (Box *box : table->map())
     {
         LateralBox *lateralBox = (LateralBox *)box;

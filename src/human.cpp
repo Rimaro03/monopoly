@@ -7,8 +7,11 @@
 Human::Human(const unsigned int ID, int balance) : Player(ID, balance) {}
 
 void Human::turn(Table* table) {
+    // Check if the player is still in the game
     if(balance() == -1) return;
 
+    // if the player is in a negative balance he is eliminated
+    // security check
     if(balance() < 0){
         Game::UpdateLog("- Giocatore " + std::to_string(ID()) + " e' stato eliminato");
         Player::removePlayer(table);
@@ -16,6 +19,7 @@ void Human::turn(Table* table) {
     }
     Player::move();
 
+    // if the player pass the start box he get a bonus
     if(indexMove() < Player::lastPosition()){
         balance(balance() + START_PASS_BONUS);
         Game::UpdateLog("- Giocatore " + std::to_string(Player::ID()) +" e' passato dal via e ha ritirato " + std::to_string(START_PASS_BONUS) + " fiorini");
@@ -30,6 +34,7 @@ void Human::turn(Table* table) {
     Box* boxUnknow = boxMap[indexMove()];
     LateralBox* box = (LateralBox*) boxUnknow;
 
+    // ask the player if he want to buy the box
     if(box->owner() == nullptr){
         if(Player::balance() - box->price() >= 0){
             std::string answer;
@@ -47,6 +52,7 @@ void Human::turn(Table* table) {
         Player::endTurn();
         return;
     }
+    // ask the player if he want to build a house or an hotel
     else if (box->owner() == this){
         if(box->house() && !box->hotel()){
             if(Player::balance() - box->buildingRent() >= 0){
@@ -81,6 +87,7 @@ void Human::turn(Table* table) {
             }
         }
     }
+    // if the player is not the owner of the box he pay the rent
     else if (box->owner() != this){
         if(Player::payPlayer(box->owner(), box)){
             if(box->hotel()){
