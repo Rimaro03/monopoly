@@ -82,7 +82,7 @@ void Game::run_Internal()
 
 	// play until there is a winner and, if it's a bot game, until the max turns count is reached
 	int turnsCount = 0;
-	while (!table_.hasWinner() && (gameType_ == GameType::PLAYER_VS_ENTITY || turnsCount < MAX_BOT_GAME_TURNS))
+	while (!table_.hasWinner() && turnsCount < MAX_GAME_TURNS)
 	{
 		table_.turn();
 		turnsCount++;
